@@ -33,9 +33,10 @@ int main(int argc, char *argv[])
                     isRunning = false;
                 }
             }
-            newPlayer->handlingMovement(event);
         }
         // newPlayer->set_rect_cordinate();
+        newPlayer->handlingMovement(event);
+
         newPlayer->render_sprite(renderer, 3);
         SDL_RenderPresent(renderer);
 

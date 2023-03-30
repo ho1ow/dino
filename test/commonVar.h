@@ -9,6 +9,8 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 #include <iostream>
+extern const Uint8 *currentKeyStates;
+
 extern const int SCREEN_WIDTH;
 extern const int SCREEN_HEIGHT;
 extern SDL_Window *window;

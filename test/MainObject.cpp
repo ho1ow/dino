@@ -49,72 +49,84 @@ void player::set_rect_width_and_height(const int &width, const int &height)
     crect.h = height;
 }
 
+// void player::handlingMovement(SDL_Event &event)
+// {
+//     if (event.type == SDL_KEYDOWN)
+//     {
+//         // Set texture based on current keystate
+//         const Uint8 *currentKeyStates = SDL_GetKeyboardState(NULL);
+
+//         if (currentKeyStates[SDL_SCANCODE_W])
+//         {
+//             crect.y -= 100;
+//         }
+//         else if (currentKeyStates[SDL_SCANCODE_S])
+//         {
+//             crect.y += 100;
+//         }
+//         else if (currentKeyStates[SDL_SCANCODE_A])
+//         {
+//             crect.x -= 100;
+//         }
+//         else if (currentKeyStates[SDL_SCANCODE_D])
+//         {
+//             crect.x += 100;
+//             std::cerr << crect.x << "\n";
+//         }
+//     }
+//     else if (event.type == SDL_KEYUP)
+//     {
+//         const Uint8 *currentKeyStates = SDL_GetKeyboardState(NULL);
+
+//         if (currentKeyStates[SDL_SCANCODE_W])
+//         {
+//             crect.y += 100;
+//         }
+//         else if (currentKeyStates[SDL_SCANCODE_S])
+//         {
+//             crect.y -= 100;
+//         }
+//         else if (currentKeyStates[SDL_SCANCODE_A])
+//         {
+//             crect.x += 100;
+//         }
+//         else if (currentKeyStates[SDL_SCANCODE_D])
+//         {
+//             crect.x -= 100;
+//         }
+//     }
+
+//     else
+//     {
+//         return;
+//     }
+// }
 void player::handlingMovement(SDL_Event &event)
 {
-    const Uint8 *currentKeyStates = SDL_GetKeyboardState(NULL);
-    if (event.type == SDL_KEYDOWN)
+    int yMovement = 0;
+    int xMovement = 0;
+
+    if (currentKeyStates[SDL_SCANCODE_W])
     {
-
-        // switch (event.key.keysym.sym)
-        // {
-        // case SDLK_d:
-        //     crect.x += 100;
-        //     break;
-        // case SDLK_a:
-        //     crect.x -= 100;
-        //     break;
-        // case SDLK_w:
-        //     crect.y -= 100;
-        //     break;
-        // case SDLK_s:
-        //     crect.y += 100;
-        //     break;
-        // }
-
-        // Set texture based on current keystate
-
-        if (currentKeyStates[SDL_SCANCODE_W])
-        {
-            crect.y -= 100;
-        }
-        else if (currentKeyStates[SDL_SCANCODE_S])
-        {
-            crect.y += 100;
-        }
-        else if (currentKeyStates[SDL_SCANCODE_A])
-        {
-            crect.x -= 100;
-        }
-        else if (currentKeyStates[SDL_SCANCODE_D])
-        {
-            crect.x += 100;
-            std::cerr << crect.x << "\n";
-        }
+        yMovement -= 10;
     }
-    else if (event.type == SDL_KEYUP)
+    else if (currentKeyStates[SDL_SCANCODE_S])
     {
-        if (currentKeyStates[SDL_SCANCODE_W])
-        {
-            crect.y += 100;
-        }
-        else if (currentKeyStates[SDL_SCANCODE_S])
-        {
-            crect.y -= 100;
-        }
-        else if (currentKeyStates[SDL_SCANCODE_A])
-        {
-            crect.x += 100;
-        }
-        else if (currentKeyStates[SDL_SCANCODE_D])
-        {
-            crect.x -= 100;
-        }
+        yMovement += 10;
+    }
+    else if (currentKeyStates[SDL_SCANCODE_A])
+    {
+        xMovement -= 10;
+    }
+    else if (currentKeyStates[SDL_SCANCODE_D])
+    {
+        xMovement += 10;
+        std::cerr << crect.x << "\n";
     }
 
-    else
-    {
-        return;
-    }
+    crect.x += xMovement;
+    crect.y += yMovement;
+    return;
 }
 SDL_Rect player::get_rect() const
 {
