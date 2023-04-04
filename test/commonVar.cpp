@@ -1,12 +1,20 @@
 #include "commonVar.h"
+
 const int SCREEN_WIDTH = 1920;
-const int SCREEN_HEIGHT = 1080;
+const int SCREEN_HEIGHT = 1200;
+
+const int FPS = 60;
+const int FRAME_TIME = 1000 / FPS;
+
 SDL_Event event;
 const Uint8 *currentKeyStates = SDL_GetKeyboardState(nullptr);
+
 SDL_Window *window = SDL_CreateWindow(" test ", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
 SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+
 const int MIDDLE_X = SCREEN_WIDTH / 2;
 const int MIDDLE_Y = SCREEN_HEIGHT / 2;
+
 bool check_collision_2_rect(const SDL_Rect &a, const SDL_Rect &b)
 {
     int leftA, leftB;

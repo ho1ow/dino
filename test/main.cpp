@@ -1,15 +1,22 @@
 #include "commonVar.h"
 #include "backGround.h"
-#include "MainObject.h"
+#include "ObjectManager.h"
+#include "Dino.h"
+
+Uint32 frameStart;
+int frameTime;
+
 BackGround *backGround = new BackGround();
-player *newPlayer = new player();
+Dino *newDino = new Dino();
+Dino *dinoSheet = new Dino();
+
 int main(int argc, char *argv[])
 {
     backGround->loading_background(renderer, "res/img/bg.png");
-    newPlayer->set_rect_cordinate(0, 0);
-    if (newPlayer->get_text() == NULL)
+
+    if (newDino->get_text() == NULL)
     {
-        std::cout << "error";
+        std::cerr << "error";
         exit(EXIT_FAILURE);
     }
     bool isRunning = true;
@@ -18,7 +25,7 @@ int main(int argc, char *argv[])
 
         backGround->render_background_scroll(renderer);
         backGround->update_background_scroll();
-        backGround->set_speed(2);
+        backGround->set_speed(7);
 
         while (SDL_PollEvent(&event))
         {
@@ -33,13 +40,21 @@ int main(int argc, char *argv[])
                     isRunning = false;
                 }
             }
+            newDino->jump(event);
         }
-        // newPlayer->set_rect_cordinate();
-        newPlayer->handlingMovement(event);
 
-        newPlayer->render_sprite(renderer, 3);
-        SDL_RenderPresent(renderer);
+        newDino->handleInput();
+        newDino->renderWithScale(renderer, 0.5);
 
+        dinoSheet->render(0, 0, &dinoSpriteClips[0]);
+
+        SDL_RenderPresent(renderer); 
         SDL_RenderClear(renderer);
+
+        frameTime = SDL_GetTicks() - frameStart;
+        if (frameTime < FRAME_TIME)
+        {
+            SDL_Delay(FRAME_TIME - frameTime);
+        }
     }
 }
