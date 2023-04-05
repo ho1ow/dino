@@ -3,23 +3,13 @@
 #include "ObjectManager.h"
 #include "Dino.h"
 
-Uint32 frameStart;
-int frameTime;
-
 BackGround *backGround = new BackGround();
-
-Dino *newDino = new Dino(64, 63, dino);
-Dino *dinoSheet = new Dino(744, 253, dinoSprite);
+Dino *dinoSheet = new Dino(FRAME_SHEET_WIDTH, FRAME_SHEET_HEIGHT, dinoSprite);
 
 int main(int argc, char *argv[])
 {
     backGround->loading_background(renderer, "res/img/bg.png");
 
-    if (newDino->get_text() == NULL)
-    {
-        std::cerr << "error";
-        exit(EXIT_FAILURE);
-    }
     bool isRunning = true;
     while (isRunning)
     {
@@ -41,24 +31,13 @@ int main(int argc, char *argv[])
                     isRunning = false;
                 }
             }
-            // newDino->jump(event);
             dinoSheet->jump(event);
         }
 
-        // newDino->handleInput();
-        // newDino->renderWithScale(renderer, 1);
         dinoSheet->handleInput();
-        dinoSheet->move();
-        dinoSheet->render(dinoSheet->currentClip);
+        dinoSheet->render();
 
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
-        
-
-        frameTime = SDL_GetTicks() - frameStart;
-        if (frameTime < FRAME_TIME)
-        {
-            SDL_Delay(FRAME_TIME - frameTime);
-        }
     }
 }

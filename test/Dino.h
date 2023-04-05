@@ -1,40 +1,35 @@
 #include "commonVar.h"
-#include "ObjectManager.h"
 
-class Dino : public Object
+class Dino
 {
 protected:
-    // Gravity
-    const int GRAVITY = 2;
+    const int WALKING_ANIMATION_FRAMES = 2;
+    SDL_Texture *ctexture;
+    SDL_Rect crect;
 
+    const int GRAVITY = 2;
     // Jump velocity
-    const int JUMP_VELOCITY = -12;
+    const int JUMP_VELOCITY = -10;
 
     // Delay animation
     bool jumping = false;
     int jumpDelay = 0;
     const int JUMP_DELAY_TIME = 20;
-    int playerVelY = 0;
-
-    int width, height;
-    const int WALKING_ANIMATION_FRAMES = 2;
+    int velY = 0;
 
 public:
     Dino(int w, int h, const char *path);
     ~Dino();
     SDL_Rect dinoSpriteClips[4] = {
 
-        {0, 0, 186, 253},
-        {186, 0, 186, 253},
-        {186 * 2, 0, 186, 253},
-        {186 * 3, 0, 186, 253},
+        {0, 0, FRAME_WIDTH, FRAME_HEIGHT},
+        {FRAME_WIDTH, 0, FRAME_WIDTH, FRAME_HEIGHT},
+        {FRAME_WIDTH * 2, 0, FRAME_WIDTH, FRAME_HEIGHT},
+        {FRAME_WIDTH * 3, 0, FRAME_WIDTH, FRAME_HEIGHT},
     };
-    SDL_Rect *currentClip;
-
-    int frameCount = 2;
 
     void handleInput();
     void jump(SDL_Event &event);
-    void move();
-    void render(SDL_Rect *clip);
+    SDL_Rect *setFrameMove();
+    void render();
 };
