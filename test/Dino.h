@@ -17,13 +17,24 @@ protected:
     int playerVelY = 0;
 
     int width, height;
-    SDL_Rect dinoSpriteClips[4];
+    const int WALKING_ANIMATION_FRAMES = 2;
 
 public:
-    Dino();
+    Dino(int w, int h, const char *path);
     ~Dino();
+    SDL_Rect dinoSpriteClips[4] = {
+
+        {0, 0, 186, 253},
+        {186, 0, 186, 253},
+        {186 * 2, 0, 186, 253},
+        {186 * 3, 0, 186, 253},
+    };
+    SDL_Rect *currentClip;
+
+    int frameCount = 2;
 
     void handleInput();
     void jump(SDL_Event &event);
-    void render(int x, int y, SDL_Rect *clip);
+    void move();
+    void render(SDL_Rect *clip);
 };

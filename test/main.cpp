@@ -7,8 +7,9 @@ Uint32 frameStart;
 int frameTime;
 
 BackGround *backGround = new BackGround();
-Dino *newDino = new Dino();
-Dino *dinoSheet = new Dino();
+
+Dino *newDino = new Dino(64, 63, dino);
+Dino *dinoSheet = new Dino(744, 253, dinoSprite);
 
 int main(int argc, char *argv[])
 {
@@ -40,16 +41,19 @@ int main(int argc, char *argv[])
                     isRunning = false;
                 }
             }
-            newDino->jump(event);
+            // newDino->jump(event);
+            dinoSheet->jump(event);
         }
 
-        newDino->handleInput();
-        newDino->renderWithScale(renderer, 0.5);
+        // newDino->handleInput();
+        // newDino->renderWithScale(renderer, 1);
+        dinoSheet->handleInput();
+        dinoSheet->move();
+        dinoSheet->render(dinoSheet->currentClip);
 
-        dinoSheet->render(0, 0, &dinoSpriteClips[0]);
-
-        SDL_RenderPresent(renderer); 
+        SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
+        
 
         frameTime = SDL_GetTicks() - frameStart;
         if (frameTime < FRAME_TIME)

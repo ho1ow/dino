@@ -2,14 +2,10 @@
 
 Object::Object()
 {
-    ctexture = IMG_LoadTexture(renderer, "res/img/dinoSprite.png");
-
     crect.x = 0;
     crect.y = 0;
-    crect.w = 744;
-    crect.h = 253;
+    
 }
-
 
 Object::~Object()
 {
@@ -20,15 +16,11 @@ void Object::load_sprite(SDL_Renderer *renderer, const char *file)
 
 void Object::renderWithScale(SDL_Renderer *renderer, const double &scale)
 {
-    crect.w = static_cast<int>(744 * scale);
-    crect.h = static_cast<int>(253 * scale);
+    crect.w = static_cast<int>(crect.w * scale);
+    crect.h = static_cast<int>(crect.h * scale);
     SDL_Rect destRect = {crect.x, crect.y, crect.w, crect.h};
 
     // Render the current sprite
-
-    // This sets the texture in blendmode.
-    // SDL_SetTextureBlendMode(ctexture, SDL_BLENDMODE_BLEND);
-
     SDL_RenderCopy(renderer, ctexture, nullptr, &destRect);
 }
 
