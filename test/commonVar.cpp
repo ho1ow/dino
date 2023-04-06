@@ -10,13 +10,8 @@ SDL_Event event;
 SDL_Window *window = SDL_CreateWindow(" test ", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
 SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-const char *dinoSprite="res/img/dinoSprite2.png";
+const char *dinoSprite="res/img/dinoSpriteMove.png";
 
-const int FRAME_SHEET_WIDTH=744;
-const int FRAME_SHEET_HEIGHT=253;
-
-const int FRAME_WIDTH = FRAME_SHEET_WIDTH/4;
-const int FRAME_HEIGHT = 253;
 
 
 bool check_collision_2_rect(const SDL_Rect &a, const SDL_Rect &b)

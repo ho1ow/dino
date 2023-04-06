@@ -4,7 +4,11 @@
 #include "Dino.h"
 
 BackGround *backGround = new BackGround();
-Dino *dinoSheet = new Dino(FRAME_SHEET_WIDTH, FRAME_SHEET_HEIGHT, dinoSprite);
+
+const char *test = "res/img/sheet.png";
+
+Dino *testDino = new Dino(88, 94, test);
+
 
 int main(int argc, char *argv[])
 {
@@ -31,12 +35,13 @@ int main(int argc, char *argv[])
                     isRunning = false;
                 }
             }
-            dinoSheet->jump(event);
+            testDino->jump(event);
+            testDino->duck(event);
+            
         }
-
-        dinoSheet->handleInput();
-        dinoSheet->render();
-
+        testDino->handleInput();
+        testDino->render();
+        
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
     }

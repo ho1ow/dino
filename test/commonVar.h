@@ -22,13 +22,6 @@ extern SDL_Event event;
 
 extern const char *dinoSprite;
 
-extern const int FRAME_SHEET_WIDTH;
-extern const int FRAME_SHEET_HEIGHT;
-
-
-extern const int FRAME_WIDTH;
-extern const int FRAME_HEIGHT;
-
 extern bool check_collision_2_rect(const SDL_Rect &a, const SDL_Rect &b);
 
 #endif
