@@ -1,20 +1,15 @@
 #include "commonVar.h"
 
 const int SCREEN_WIDTH = 1920;
-const int SCREEN_HEIGHT = 1200;
-
-
+const int SCREEN_HEIGHT = 700;
+const char *sheet = "res/img/sheet.png";
 
 SDL_Event event;
 
-SDL_Window *window = SDL_CreateWindow(" test ", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
+SDL_Window *window = SDL_CreateWindow(" Dino ", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
 SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-const char *dinoSprite="res/img/dinoSpriteMove.png";
-
-
-
-bool check_collision_2_rect(const SDL_Rect &a, const SDL_Rect &b)
+bool checkCollision(const SDL_Rect &a, const SDL_Rect &b)
 {
     int leftA, leftB;
     int rightA, rightB;
