@@ -37,7 +37,6 @@ void Ptero::getPteroFrame()
 
 void Ptero::render(SDL_Renderer *renderer, SDL_Rect *rect)
 {
-    getPteroFrame();
     Texture::renderWithPosAndScale(renderer, crect, PteroPos, scale);
 }
 void Ptero::update()
@@ -48,11 +47,13 @@ void Ptero::update()
     }
     PteroPos.x += PTERO_VEL;
     updateHitBox();
+    getPteroFrame();
 }
 void Ptero::updateHitBox()
 {
-    hitBox = {PteroPos.x + padding, PteroPos.y + padding, getRectWidth() - 2 * padding, getRectHeight() - 2 * padding};
+    hitBox = {PteroPos.x + static_cast<int>(padding * scale), PteroPos.y + static_cast<int>(padding * scale), getRectWidth() - 2 * static_cast<int>(padding * scale), getRectHeight() - 2 * static_cast<int>(padding * scale)};
 }
-SDL_Rect Ptero::getCurrentFrame() {
-    return currentClip;
+void Ptero::reset()
+{
+    getPteroPos();
 }

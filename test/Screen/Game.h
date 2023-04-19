@@ -9,18 +9,30 @@ class Game
 private:
     Background *background;
     MoveObject *moveObject;
-
-    bool isRunning = true;
+    
+    static bool isGameOver;
+    static bool isPause;
+    static bool isReset;
 
 public:
     Game();
     ~Game();
+    bool isRunning;
 
     void handleEvents();
     void update();
     void render();
-    void clean();
 
+    bool isCollide;
+    void handleCollision();
+
+    void gameOver();
+    void reset();
+    
+    static void paused();
+    static void resume();
+
+    void run();
 };
 
 #endif

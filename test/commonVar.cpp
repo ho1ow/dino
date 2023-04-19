@@ -2,8 +2,9 @@
 
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 700;
-const char *sheet = "res/img/sheet.png";
 
+const char *sheet = "res/img/sheet.png";
+SDL_Color COLOR={255,255,255,255};
 SDL_Event event;
 
 SDL_Window *window = SDL_CreateWindow(" Dino ", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);

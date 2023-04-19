@@ -15,6 +15,8 @@
 extern const int SCREEN_WIDTH;
 extern const int SCREEN_HEIGHT;
 extern const char *sheet;
+extern SDL_Color COLOR;
+
 
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;

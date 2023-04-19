@@ -41,6 +41,10 @@ void Cactus::update()
         getCactusPos();
     }
     cactusPos.x += CACTUS_VEL;
-    hitBox = {cactusPos.x + padding, cactusPos.y + padding, getRectWidth() - padding * 2, getRectHeight() - padding * 2};
-    std::cerr << "cactus" << hitBox.x << " " << hitBox.y << " " << hitBox.h << " " << hitBox.w << "\n";
+    hitBox = {cactusPos.x + static_cast<int>(padding * scale), cactusPos.y + static_cast<int>(padding * scale), getRectWidth() - static_cast<int>(padding * scale) * 2, getRectHeight() - static_cast<int>(padding * scale) * 2};
+}
+void Cactus::reset()
+{
+    getCactusType();
+    getCactusPos();
 }

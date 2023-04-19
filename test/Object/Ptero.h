@@ -29,7 +29,8 @@ public:
     void render(SDL_Renderer *renderer, SDL_Rect *rect);
     void update();
     void updateHitBox();
-    SDL_Rect getCurrentFrame();
+
+    void reset();
 };
 
 #endif

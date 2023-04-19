@@ -74,65 +74,70 @@ void Dino::getDinoFrame()
     static Uint32 lastFrameTime = 0;
     Uint32 currentTime = SDL_GetTicks();
 
-    if (died)
+    if (isJumping)
     {
-        currentClip = dino.died;
+        // jump frame
+        currentClip = dino.move;
+    }
+    else if (isDucking)
+    {
+        // duck frame
+        tmp_duck_w = tmp_duck_w % 2;
+        currentClip.x = dino.duck.x + dino.duck.w * tmp_duck_w;
+        currentClip.y = dino.duck.y;
+        currentClip.w = dino.duck.w;
+        currentClip.h = dino.duck.h;
+        if (currentTime - lastFrameTime > 200)
+        {
+            tmp_duck_w++;
+            lastFrameTime = currentTime;
+        }
     }
     else
     {
-        if (isJumping)
+        // move frame
+        tmp_move_w = tmp_move_w % 4;
+        currentClip.x = dino.move.x + dino.move.w * tmp_move_w;
+        currentClip.y = dino.move.y;
+        currentClip.w = dino.move.w;
+        currentClip.h = dino.move.h;
+
+        if (currentTime - lastFrameTime > 100)
         {
-            // jump frame
-            currentClip = dino.move;
-        }
-        else if (isDucking)
-        {
-            // duck frame
-            tmp_duck_w = tmp_duck_w % 2;
-            currentClip.x = dino.duck.x + dino.duck.w * tmp_duck_w;
-            currentClip.y = dino.duck.y;
-            currentClip.w = dino.duck.w;
-            currentClip.h = dino.duck.h;
-            if (currentTime - lastFrameTime > 200)
-            {
-                tmp_duck_w++;
-                lastFrameTime = currentTime;
-            }
-        }
-        else
-        {
-            // move frame
-            tmp_move_w = tmp_move_w % 4;
-            currentClip.x = dino.move.x + dino.move.w * tmp_move_w;
-            currentClip.y = dino.move.y;
-            currentClip.w = dino.move.w;
-            currentClip.h = dino.move.h;
-            
-            if (currentTime - lastFrameTime > 100)
-            {
-                tmp_move_w++;
-                lastFrameTime = currentTime;
-            }
+            tmp_move_w++;
+            lastFrameTime = currentTime;
         }
     }
+
     crect = &currentClip;
 }
 void Dino::updateHitBox()
 {
-    hitBox = {dinoPos.x + padding, dinoPos.y + padding, getRectWidth() - padding * 2, getRectHeight() - padding};
+    hitBox = {dinoPos.x + static_cast<int>(padding * scale), dinoPos.y + static_cast<int>(padding * scale), getRectWidth() - static_cast<int>(padding * 2 * scale), getRectHeight() - static_cast<int>(padding * scale)};
 }
 void Dino::update()
 {
     updatePos();
     getDinoFrame();
     updateHitBox();
-    std::cerr << "dino" << hitBox.x << " " << hitBox.y << " " << hitBox.h << " " << hitBox.w << "\n";
 }
 
 void Dino::render(SDL_Renderer *renderer_, SDL_Rect *rect)
 {
 
-    Texture::renderWithPosAndScale(renderer_, crect, dinoPos, scale);
+    if (!died)
+    {
+        Texture::renderWithPosAndScale(renderer_, crect, dinoPos, scale);
+    }
+    else
+    {
+
+        if (dinoPos.y >= 579)
+        {
+            dinoPos.y = 549;
+        }
+        Texture::renderWithPosAndScale(renderer_, &dino.died, dinoPos, scale);
+    }
 }
 
 Vector2 Dino::getPos()
@@ -140,12 +145,19 @@ Vector2 Dino::getPos()
     return dinoPos;
 }
 
-void Dino::gameOver()
+void Dino::setDied()
 {
     died = true;
 }
-
+void Dino::setLive()
+{
+    died = false;
+}
 void Dino::reset()
 {
     died = false;
+    dinoPos = {0, SCREEN_HEIGHT - crect->h};
+    velY = 0;
+    isJumping = false;
+    isDucking = false;
 }

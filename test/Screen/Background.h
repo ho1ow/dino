@@ -20,15 +20,12 @@ public:
     Background();
     ~Background();
 
-    static SDL_Color color;
-
     void update();
     void renderCloudAndRoad(SDL_Renderer *renderer);
 
     void setBgColor(SDL_Color color);
     void setNight(SDL_Color color);
     void setDay(SDL_Color color);
-
 
     void renderBg(SDL_Renderer *renderer);
 };

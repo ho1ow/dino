@@ -2,8 +2,8 @@
 #define TEXTURE_H
 
 #include "commonVar.h"
-#include "Utils/vector.h"
-#include  "Utils/Random.h"
+#include "Utils/Vector.h"
+#include "Utils/Random.h"
 
 class Texture
 {
@@ -38,7 +38,7 @@ public:
     double get_speed() { return speed_; }
 
     bool offScreen(Vector2 pos);
-    
+
 };
 
 #endif

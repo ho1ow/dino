@@ -2,10 +2,16 @@
 
 MoveObject::MoveObject()
 {
-    Dino *dino = new Dino(sheet, 1.5);
-    Cactus *cactus = new Cactus(sheet, 1.5);
-    Ptero *ptero = new Ptero(sheet, 1.5);
+    dino = new Dino(sheet, 1.5);
+    cactus = new Cactus(sheet, 1.5);
+    ptero = new Ptero(sheet, 1.5);
+    if (dino == NULL || cactus == NULL || ptero == NULL)
+    {
+        std::cerr << "Error: MoveObject::MoveObject() failed to allocate memory for dino, cactus or ptero" << std::endl;
+        exit(0);
+    }
 }
+
 MoveObject::~MoveObject()
 {
     delete dino;
@@ -30,16 +36,27 @@ void MoveObject::handleEvent()
     dino->jump(event);
     dino->duck(event);
 }
-void MoveObject::handleCollision()
+bool MoveObject::isCollide()
 {
     if (SDL_HasIntersection(&(cactus->hitBox), &(dino->hitBox)) == SDL_TRUE)
     {
-        SDL_Log("Hit Cactus");
-        std::cerr << "died, lose " << std::endl;
+        return true;
     }
     if (SDL_HasIntersection(&(ptero->hitBox), &(dino->hitBox)) == SDL_TRUE)
     {
-        SDL_Log("Hit Ptero");
-        std::cerr << "died, lose " << std::endl;
+        return true;
     }
+    return false;
+}
+void MoveObject::setDinoDied()
+{
+    if (isCollide())
+        dino->setDied();
+}
+void MoveObject::reset()
+{
+
+    dino->reset();
+    cactus->reset();
+    ptero->reset();
 }

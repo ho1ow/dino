@@ -1,3 +1,5 @@
+#ifndef DINO_H
+#define DINO_H
 #include "../Texture.h"
 
 class Dino : public Texture
@@ -47,7 +49,10 @@ public:
     void update();
     void updateHitBox();
 
-    void gameOver();
-
+    void setDied();
+    void setLive();
     void reset();
+
+
 };
+#endif

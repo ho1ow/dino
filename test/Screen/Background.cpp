@@ -2,10 +2,6 @@
 
 Background::Background()
 {
-    color.r = 255;
-    color.g = 255;
-    color.b = 255;
-    color.a = 255;
 
     cloud = new Cloud(sheet);
     road = new Road(sheet);
@@ -18,11 +14,11 @@ Background::~Background()
 void Background::setBgColor(SDL_Color color)
 {
     // Only set the color if it has changed
-    if (color.r != this->color.r || color.g != this->color.g || color.b != this->color.b || color.a != this->color.a)
+    if (color.r != COLOR.r || color.g != COLOR.g || color.b != COLOR.b || color.a != COLOR.a)
     {
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
         SDL_RenderClear(renderer);
-        this->color = color;
+        COLOR = color;
     }
 }
 void Background::setNight(SDL_Color color)
@@ -73,11 +69,11 @@ void Background::update()
     road->set_speed(4);
     if (isNight)
     {
-        setNight(color);
+        setNight(COLOR);
     }
     if (isDay)
     {
-        setDay(color);
+        setDay(COLOR);
     }
 }
 void Background::renderCloudAndRoad(SDL_Renderer *renderer)
@@ -88,6 +84,6 @@ void Background::renderCloudAndRoad(SDL_Renderer *renderer)
 
 void Background::renderBg(SDL_Renderer *renderer)
 {
-    setBgColor(color);
+    // setBgColor(color);
     renderCloudAndRoad(renderer);
 }

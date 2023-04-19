@@ -5,6 +5,8 @@
 #include "../Object/Ptero.h"
 #include "../Object/Dino.h"
 #include "../Texture.h"
+
+
 class MoveObject
 {
 protected:
@@ -19,7 +21,9 @@ public:
     void update();
     void render(SDL_Renderer *renderer);
     void handleEvent();
-    void handleCollision();
+    bool isCollide();
+    void setDinoDied();
+    void reset();
 };
 
 #endif

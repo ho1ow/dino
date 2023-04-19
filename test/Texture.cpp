@@ -42,9 +42,9 @@ int Texture::getRectY()
 
 void Texture::renderScroll(SDL_Renderer *renderer_, SDL_Rect *rect)
 {
-    SDL_Rect destRect = {x_, SCREEN_HEIGHT - rect->h, rect->w, rect->h};
+    SDL_Rect destRect = {x_, SCREEN_HEIGHT - rect->h-20, rect->w, rect->h};
     SDL_RenderCopy(renderer_, cTexture, rect, &destRect);
-    destRect = {x_ - rect->w, SCREEN_HEIGHT - rect->h, rect->w, rect->h};
+    destRect = {x_ - rect->w, SCREEN_HEIGHT - rect->h-20, rect->w, rect->h};
     SDL_RenderCopy(renderer_, cTexture, rect, &destRect);
 }
 
@@ -76,3 +76,4 @@ bool Texture::offScreen(Vector2 pos)
     }
     return false;
 }
+
