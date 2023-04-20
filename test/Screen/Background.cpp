@@ -5,6 +5,7 @@ Background::Background()
 
     cloud = new Cloud(sheet);
     road = new Road(sheet);
+
     gameover = new Texture(sheet, 1);
     restartButton = new Texture(sheet, 1);
 
@@ -83,6 +84,15 @@ void Background::renderCloudAndRoad(SDL_Renderer *renderer)
 {
     cloud->render(renderer, cloud->getRect());
     road->renderScroll(renderer, road->getRect());
+    if (road->getTexture() == NULL)
+    {
+        printf("Error: %s\n", SDL_GetError());
+    }
+    if (road->getRect() == NULL)
+    {
+        printf("Error: %s\n", SDL_GetError());
+    }
+
     pause->render(renderer, pause->getRect());
 }
 
@@ -115,9 +125,4 @@ void Background::reset()
     setIsDay();
     cloud->reset();
     road->reset();
-}
-
-void Background::bgPause()
-{
-    pause->update();
 }

@@ -47,15 +47,16 @@ void Game::handleEvents()
                 {
                     isReset = true;
                 }
+                if(isPause)
+                {
+                    isPause=false;
+                }
                 break;
             case SDLK_p:
                 if(!isGameOver)
                 {
-                    paused();
+                    isPause=!isPause;
                 }
-                break;
-            case SDLK_r:
-                resume();
                 break;
             case SDLK_1:
                 background->setIsDay();
@@ -112,18 +113,8 @@ void Game::reset()
     isGameOver = false;
 }
 
-void Game::paused()
-{
-    isPause = true;
-    background->bgPause();
-}
-void Game::resume()
-{
-    isPause = false;
-}
 void Game::run()
 {
-    int x = 0;
     while (isRunning)
     {
         background->renderBg(renderer);

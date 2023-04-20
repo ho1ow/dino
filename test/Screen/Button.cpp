@@ -17,11 +17,4 @@ void Button::render(SDL_Renderer *renderer_, SDL_Rect *rect)
 {
     renderWithPosAndScale(renderer, crect, pos, scale);
 }
-void Button::setScrRectX(int x)
-{
-    crect->x -= x;
-}
-void Button::update()
-{
-    setScrRectX(33);
-}
+

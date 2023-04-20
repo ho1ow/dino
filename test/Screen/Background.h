@@ -37,7 +37,6 @@ public:
 
     void renderBg(SDL_Renderer *renderer);
     void renderGameOver(SDL_Renderer *renderer);
-    void bgPause();
     void reset();
 };
 
