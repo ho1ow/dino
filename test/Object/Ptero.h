@@ -20,8 +20,8 @@ public:
     ~Ptero(){};
 
     SDL_Rect hitBox;
-    Vector2 PteroPos;
-    Vector2 ranPteroPos();
+    Vector PteroPos;
+    Vector ranPteroPos();
     void getPteroPos();
 
     void getPteroFrame();

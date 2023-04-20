@@ -21,7 +21,7 @@ protected:
 
     bool died = false;
 
-    Vector2 dinoPos = {};
+    Vector dinoPos = {};
     SDL_Rect currentClip = dino.move;
 
     struct
@@ -43,7 +43,7 @@ public:
     void jump(SDL_Event &event);
     void duck(SDL_Event &event);
 
-    Vector2 getPos();
+    Vector getPos();
     void getDinoFrame();
     void render(SDL_Renderer *renderer, SDL_Rect *rect);
     void update();

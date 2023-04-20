@@ -17,8 +17,9 @@ protected:
 
 public:
     SDL_Texture *getTexture();
+    
     SDL_Rect *getRect();
-
+        
     int getRectWidth();
     int getRectHeight();
     int getRectX();
@@ -29,15 +30,15 @@ public:
     ~Texture();
 
     void renderScroll(SDL_Renderer *renderer_, SDL_Rect *rect);
-    void renderWithPos(SDL_Renderer *renderer_, SDL_Rect *rect, Vector2 pos);
-    void renderWithPosAndScale(SDL_Renderer *renderer_, SDL_Rect *rect, Vector2 pos, double scale);
+    void renderWithPos(SDL_Renderer *renderer_, SDL_Rect *rect, Vector pos);
+    void renderWithPosAndScale(SDL_Renderer *renderer_, SDL_Rect *rect, Vector pos, double scale);
 
     void update(SDL_Rect *rect);
 
     void set_speed(double speed) { speed_ = speed; }
     double get_speed() { return speed_; }
 
-    bool offScreen(Vector2 pos);
+    bool offScreen(Vector pos);
 
 };
 

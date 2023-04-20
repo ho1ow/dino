@@ -11,7 +11,7 @@ void Ptero::getPteroPos()
     PteroPos = ranPteroPos();
 }
 
-Vector2 Ptero::ranPteroPos()
+Vector Ptero::ranPteroPos()
 {
     return {Random::random(SCREEN_WIDTH, Random::random(SCREEN_WIDTH, SCREEN_WIDTH * 3 / 2)), Random::random(SCREEN_HEIGHT / 3, SCREEN_HEIGHT / 2)};
 }

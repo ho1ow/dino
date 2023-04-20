@@ -8,13 +8,13 @@ Cloud::Cloud(const char *path) : Texture(path)
     }
 }
 
-// Vector2 Cloud::ranCloudPos()
+// Vector Cloud::ranCloudPos()
 // {
 //     return {Random::random(SCREEN_WIDTH, Random::random(SCREEN_WIDTH, SCREEN_WIDTH * 4)), Random::random(150, SCREEN_HEIGHT / 3)};
 // }
-Vector2 Cloud::ranCloudPos()
+Vector Cloud::ranCloudPos()
 {
-    Vector2 newPos;
+    Vector newPos;
     bool validPos = false;
     while (!validPos)
     {
@@ -22,7 +22,7 @@ Vector2 Cloud::ranCloudPos()
         validPos = true;
         for (auto &pos : clouds)
         {
-            if (Vector2::distance(newPos, pos) < MIN_CLOUD_DIST)
+            if (Vector::distance(newPos, pos) < MIN_CLOUD_DIST)
             {
                 validPos = false;
                 break;
@@ -50,5 +50,12 @@ void Cloud::update()
             pos = ranCloudPos();
         }
         pos.x += CLOUD_VEL;
+    }
+}
+void Cloud::reset()
+{
+    for (auto &pos : clouds)
+    {
+        pos = ranCloudPos();
     }
 }

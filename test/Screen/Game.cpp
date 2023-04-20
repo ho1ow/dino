@@ -31,42 +31,57 @@ void Game::handleEvents()
 
     while (SDL_PollEvent(&event))
     {
-        if (event.type == SDL_QUIT)
+        switch (event.type)
         {
+        case SDL_QUIT:
             isRunning = false;
-        }
-        if (event.type == SDL_KEYDOWN)
-        {
-            if (event.key.keysym.sym == SDLK_ESCAPE)
+            break;
+        case SDL_KEYDOWN:
+            switch (event.key.keysym.sym)
             {
+            case SDLK_ESCAPE:
                 isRunning = false;
-            }
-            else if (event.key.keysym.sym == SDLK_SPACE)
-            {
+                break;
+            case SDLK_SPACE:
                 if (isGameOver)
                 {
                     isReset = true;
                 }
-            }
-            else if (event.key.keysym.sym == SDLK_p)
-            {
-                
-                paused();
-            }
-            else if (event.key.keysym.sym == SDLK_r)
-            {
+                break;
+            case SDLK_p:
+                if(!isGameOver)
+                {
+                    paused();
+                }
+                break;
+            case SDLK_r:
                 resume();
+                break;
+            case SDLK_1:
+                background->setIsDay();
+                break;
+            case SDLK_2:
+                background->setIsNight();
+                break;
+            default:
+                break;
             }
+            break;
+        
+        default:
+            break;
         }
-        // std::cerr << "Reset :" << isGameOver << std::endl;
-
-        moveObject->handleEvent();
+        if(!isGameOver && !isPause)
+        {
+            moveObject->handleEvent();
+        }
     }
     handleCollision();
 }
 void Game::render()
 {
-    background->renderBg(renderer);
+
+    background->renderCloudAndRoad(renderer);
     moveObject->render(renderer);
 }
 
@@ -82,6 +97,7 @@ void Game::handleCollision()
 void Game::gameOver()
 {
     isGameOver = true;
+    background->renderGameOver(renderer);
     if (isReset)
     {
         reset();
@@ -90,6 +106,7 @@ void Game::gameOver()
 }
 void Game::reset()
 {
+    background->reset();
     moveObject->reset();
     isCollide = false;
     isGameOver = false;
@@ -98,6 +115,7 @@ void Game::reset()
 void Game::paused()
 {
     isPause = true;
+    background->bgPause();
 }
 void Game::resume()
 {
@@ -108,11 +126,10 @@ void Game::run()
     int x = 0;
     while (isRunning)
     {
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        SDL_RenderClear(renderer);
+        background->renderBg(renderer);
 
-        update();
         render();
+        update();
         handleEvents();
 
         SDL_RenderPresent(renderer);

@@ -17,7 +17,7 @@ void Cactus::getCactusType()
     crect = &cactus[ranCactusType()];
 }
 
-Vector2 Cactus::ranCactusPos()
+Vector Cactus::ranCactusPos()
 {
 
     return {Random::random(SCREEN_WIDTH, Random::random(SCREEN_WIDTH, SCREEN_WIDTH * 2)), SCREEN_HEIGHT - getRectHeight() - 5};

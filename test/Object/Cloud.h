@@ -10,7 +10,7 @@ protected:
     static const int CLOUD_VEL = -5;
     const int MIN_CLOUD_DIST = 150;
 
-    Vector2 clouds[MAX_CLOUDS];
+    Vector clouds[MAX_CLOUDS];
 
     SDL_Rect cloud{166, 2, 92, 27};
 
@@ -19,10 +19,12 @@ public:
 
     ~Cloud(){};
 
-    Vector2 ranCloudPos();
+    Vector ranCloudPos();
 
     void render(SDL_Renderer *renderer, SDL_Rect *rect);
     void update();
+
+    void reset();
 };
 
 #endif

@@ -5,32 +5,21 @@
 
 class Button : public Texture
 {
-    struct
-    {
-        struct
-        {
-            char *path = "assets/buttons/play.png";
-            SDL_Rect rect{35, 2, 34, 33};
-        } pause;
+private:
+public:
+    Button(const char *path, const double scale);
+    ~Button();
+    Vector pos{10,10};
 
-        struct
-        {
-            char *path = "assets/buttons/music.png";
-            SDL_Rect rect{0, 0, 32, 32};
-        } musicSetting;
+    void setPos(Vector pos);
+    void setRect(SDL_Rect *rect);
+    void setScrRectX(int x);
 
-        struct
-        {
-            char *path = "assets/buttons/change.png";
-            SDL_Rect rect{0, 0, 72, 26};
-        } change;
+    void isHovered();
+    void isClicked();
 
-        struct
-        {
-            char *path = "assets/buttons/exit_arrow.png";
-            SDL_Rect rect{0, 0, 32, 32};
-        } exit;
-    } buttons;
+    void update();
+    void render(SDL_Renderer *renderer_, SDL_Rect *rect);
 };
 
 #endif

@@ -6,15 +6,15 @@
 class Road : public Texture
 {
 private:
-    SDL_Rect road{2, 100, 2402, 30};
-
+    SDL_Rect road={2, 100, 2402, 30};
 public:
-    Road(const char *path) :  Texture(path)
+    Road(const char *path) : Texture(path)
     {
         crect = &road;
     }
     ~Road(){};
-
+    
+    void reset();
 };
 
 #endif

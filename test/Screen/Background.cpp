@@ -5,85 +5,119 @@ Background::Background()
 
     cloud = new Cloud(sheet);
     road = new Road(sheet);
+    gameover = new Texture(sheet, 1);
+    restartButton = new Texture(sheet, 1);
+
+    pause = new Button(buttons.pause.path, 1.5);
+    pause->setRect(&buttons.pause.rect);
+
+    color = {255, 255, 255, 255};
 }
 Background::~Background()
 {
     delete cloud;
     delete road;
+    delete gameover;
+    delete restartButton;
 }
-void Background::setBgColor(SDL_Color color)
+
+void Background::setNight()
 {
-    // Only set the color if it has changed
-    if (color.r != COLOR.r || color.g != COLOR.g || color.b != COLOR.b || color.a != COLOR.a)
+    if (this->color.r > night.r)
     {
-        SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-        SDL_RenderClear(renderer);
-        COLOR = color;
+        this->color.r -= change;
     }
-}
-void Background::setNight(SDL_Color color)
-{
-    if (color.r > night.r)
+    if (this->color.g > night.g)
     {
-        color.r -= change;
+        this->color.g -= change;
     }
-    if (color.g > night.g)
+    if (this->color.b > night.b)
     {
-        color.g -= change;
+        this->color.b -= change;
     }
-    if (color.b > night.b)
-    {
-        color.b -= change;
-    }
-    if (color.r == night.r && color.g == night.g && color.b == night.b)
+    if (this->color.r == night.r && this->color.g == night.g && this->color.b == night.b)
     {
         isNight = true;
-        isDay = false;
     }
+    SDL_SetRenderDrawColor(renderer, this->color.r, this->color.g, this->color.b, this->color.a);
+    SDL_RenderClear(renderer);
 }
-void Background::setDay(SDL_Color color)
+void Background::setDay()
 {
-    if (color.r < day.r)
+    if (this->color.r < day.r)
     {
-        color.r += change;
+        this->color.r += change;
     }
-    if (color.g < day.g)
+    if (this->color.g < day.g)
     {
-        color.g += change;
+        this->color.g += change;
     }
-    if (color.b < day.b)
+    if (this->color.b < day.b)
     {
-        color.b += change;
+        this->color.b += change;
     }
-    if (color.r == day.r && color.g == day.g && color.b == day.b)
+    if (this->color.r == day.r && this->color.g == day.g && this->color.b == day.b)
     {
-        isDay = true;
         isNight = false;
     }
+    SDL_SetRenderDrawColor(renderer, this->color.r, this->color.g, this->color.b, this->color.a);
+    SDL_RenderClear(renderer);
+}
+void Background::setIsNight()
+{
+    isNight = true;
+}
+void Background::setIsDay()
+{
+    isNight = false;
 }
 
 void Background::update()
 {
+
     cloud->update();
     road->update(road->getRect());
     road->set_speed(4);
-    if (isNight)
-    {
-        setNight(COLOR);
-    }
-    if (isDay)
-    {
-        setDay(COLOR);
-    }
 }
 void Background::renderCloudAndRoad(SDL_Renderer *renderer)
 {
     cloud->render(renderer, cloud->getRect());
     road->renderScroll(renderer, road->getRect());
+    pause->render(renderer, pause->getRect());
 }
 
 void Background::renderBg(SDL_Renderer *renderer)
 {
-    // setBgColor(color);
-    renderCloudAndRoad(renderer);
+
+    if (!isNight)
+    {
+        setDay();
+    }
+    else if (isNight)
+    {
+        setNight();
+    }
+}
+
+void Background::renderGameOver(SDL_Renderer *renderer)
+{
+    SDL_Rect gameover_r{1293, 27, 384, 24};
+    Vector gameoverPos = {static_cast<int>((SCREEN_WIDTH - gameover_r.w) / 2), static_cast<int>((SCREEN_HEIGHT - gameover_r.h) / 2) - 100};
+    gameover->renderWithPosAndScale(renderer, &gameover_r, gameoverPos, 1);
+
+    SDL_Rect restartButton_r{2, 2, 72, 64};
+    Vector restartButtonPos = {static_cast<int>(SCREEN_WIDTH - restartButton_r.w) / 2, static_cast<int>((SCREEN_HEIGHT - restartButton_r.h) / 2)};
+    restartButton->renderWithPosAndScale(renderer, &restartButton_r, restartButtonPos, 1);
+}
+
+void Background::reset()
+{
+    setIsDay();
+    cloud->reset();
+    road->reset();
+}
+
+void Background::bgPause()
+{
+    pause->update();
 }

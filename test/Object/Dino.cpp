@@ -140,7 +140,7 @@ void Dino::render(SDL_Renderer *renderer_, SDL_Rect *rect)
     }
 }
 
-Vector2 Dino::getPos()
+Vector Dino::getPos()
 {
     return dinoPos;
 }
