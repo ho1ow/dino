@@ -20,6 +20,7 @@ private:
     int velY = 0;
 
     bool died = false;
+    int soundDeath;
 
     Vector dinoPos = {};
     SDL_Rect currentClip = dino.move;

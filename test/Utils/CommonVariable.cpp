@@ -4,7 +4,6 @@ const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 700;
 
 const char *sheet = "res/img/sheet.png";
-const char *fontPath="res/fonts/PressStart2P-Regular.ttf";
 
 SDL_Event event;
 

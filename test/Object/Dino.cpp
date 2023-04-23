@@ -4,6 +4,7 @@ Dino::Dino(const char *path, const double scale_) : Texture(path, scale_)
 {
     crect = &dino.move;
     dinoPos = {0, SCREEN_HEIGHT - crect->h};
+    soundDeath = 0;
 }
 int tmp_w = 0;
 Dino::~Dino()
@@ -21,6 +22,7 @@ void Dino::jump(SDL_Event &event)
             velY = JUMP_VELOCITY;
             isJumping = true;
             jumpDelay = JUMP_DELAY_TIME;
+            playSound("res/sounds/jump.wav");
         }
     }
 }
@@ -144,6 +146,12 @@ Vector Dino::getPos()
 void Dino::setDied()
 {
     died = true;
+
+    if (soundDeath == 0)
+    {
+        playSound("res/sounds/death.wav");
+        soundDeath = 1;
+    }
 }
 void Dino::setLive()
 {
@@ -152,6 +160,7 @@ void Dino::setLive()
 void Dino::reset()
 {
     died = false;
+    soundDeath = 0;
     dinoPos = {0, SCREEN_HEIGHT - crect->h};
     velY = 0;
     isJumping = false;

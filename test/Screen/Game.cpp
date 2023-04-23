@@ -2,6 +2,21 @@
 
 Game::Game()
 {
+    // int mixFlags = MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_FLAC;
+    // if (!(Mix_Init(mixFlags) & mixFlags))
+    // {
+    //     std::cerr << "1";
+    //     exit(0);
+    // }
+
+    // if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1)
+    // {
+    //     std::cerr << "0";
+
+    //     exit(0);
+    // }
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+
     isRunning = true;
     isGameOver = false;
     isPause = false;
@@ -13,7 +28,7 @@ Game::Game()
     moveObject = new MoveObject();
     menu = new Menu();
     score = new Score();
-
+    playMusic("res/sounds/background.mp3");
 }
 Game::~Game()
 {
@@ -28,64 +43,7 @@ void Game::handleEvents()
             isRunning = false;
             break;
         case SDL_KEYDOWN:
-            switch (event.key.keysym.sym)
-            {
-            case SDLK_ESCAPE:
-                isRunning = false;
-                break;
-            case SDLK_p:
-                if (!isGameOver)
-                {
-                    if (!isPause)
-                    {
-                        paused();
-                    }
-                    else
-                    {
-                        resume();
-                    }
-                }
-                break;
-            case SDLK_m:
-                if (isMute)
-                {
-                    unmute();
-                }
-                else
-                {
-                    mute();
-                }
-                break;
-            case SDLK_SPACE:
-                if (isGameOver)
-                {
-                    isReset = true;
-                }
-                if (isPause)
-                {
-                    resume();
-                }
-                if (!isPlay)
-                {
-                    isPlay = true;
-                }
-                break;
-            case SDLK_1:
-                background->setIsDay();
-                break;
-            case SDLK_2:
-                background->setIsNight();
-                break;
-            case SDLK_b:
-                if (isGameOver)
-                {
-                    returnMenu();
-                }
-                break;
-            default:
-                break;
-            }
-
+            handleKeyBoard();
         case SDL_MOUSEBUTTONDOWN:
             handleMouseClick();
             break;
@@ -121,6 +79,7 @@ void Game::render()
 void Game::gameOver()
 {
     background->renderGameOver(renderer);
+    score->updateHiScore();
     isGameOver = true;
 
     if (isReset)
@@ -141,7 +100,6 @@ void Game::returnMenu()
     reset();
     background->update();
     moveObject->update();
-    score->update(0);
     isPlay = false;
 }
 void Game::paused()
@@ -176,6 +134,7 @@ void Game::handleMouseClick()
     {
         if (menu->play->isInside())
         {
+            playSound("res/sounds/click.wav");
             isPlay = true;
         }
         if (menu->exit->isInside())
@@ -198,12 +157,72 @@ void Game::handleMouseClick()
         }
     }
 }
+void Game::handleKeyBoard()
+{
+    switch (event.key.keysym.sym)
+    {
+    case SDLK_ESCAPE:
+        isRunning = false;
+        break;
+    case SDLK_p:
+        if (!isGameOver)
+        {
+            if (!isPause)
+            {
+                paused();
+            }
+            else
+            {
+                resume();
+            }
+        }
+        break;
+    case SDLK_m:
+        if (isMute)
+        {
+            unmute();
+        }
+        else
+        {
+            mute();
+        }
+        break;
+    case SDLK_SPACE:
+        if (isGameOver)
+        {
+            isReset = true;
+        }
+        if (isPause)
+        {
+            resume();
+        }
+        if (!isPlay)
+        {
+            isPlay = true;
+        }
+        break;
+    case SDLK_1:
+        background->setIsDay();
+        break;
+    case SDLK_2:
+        background->setIsNight();
+        break;
+    case SDLK_b:
+        if (isGameOver)
+        {
+            returnMenu();
+        }
+        break;
+    default:
+        break;
+    }
+}
 
 void Game::run()
 {
     while (isRunning)
     {
-        std::cerr << isPlay << " " << moveObject->isCollide() << std::endl;
+        // std::cerr << isPlay << " " << moveObject->isCollide() << std::endl;
         if (!isPlay)
         {
             menu->render(renderer);

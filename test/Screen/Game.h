@@ -33,6 +33,7 @@ public:
 
     void handleCollision();
     void handleMouseClick();
+    void handleKeyBoard();
 
     void gameOver();
     void reset();

@@ -1,7 +1,7 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include "../Object/Button.h"
+#include "../Button/Button.h"
 
 class Menu
 {

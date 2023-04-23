@@ -20,6 +20,8 @@ public:
     void setRect(SDL_Rect *rect);
 
     void hover();
+    bool isLeftClick();
+    void click();
     void afterClick();
 
     void render(SDL_Renderer *renderer_, SDL_Rect *rect);

@@ -5,10 +5,17 @@ Text::Text(const char *text, SDL_Rect *rect, Vector pos, double scale)
     this->pos = pos;
     this->scale = scale;
     this->rect = rect;
+    if (TTF_Init() < 0)
+    {
+        std::cerr << "Error loading ttf: " << TTF_GetError() << std::endl; // "Error loading font: " + TTF_GetError() + "\n
+        exit(0);
+    }
     createTexture(text);
 }
 void Text::createTexture(const char *text)
 {
+    TTF_Font *font = TTF_OpenFont("res/fonts/PressStart2P-Regular.ttf", 15);
+
     if (font == nullptr)
     {
         std::cerr << "Error loading font: " << TTF_GetError() << std::endl;
@@ -35,6 +42,7 @@ void Text::createTexture(const char *text)
         std::cerr << "Error creating texture: " << SDL_GetError() << std::endl;
         exit(0);
     }
+    TTF_CloseFont(font);
 }
 void Text::updateText(const char *text)
 {

@@ -2,8 +2,8 @@
 #define SCORE_H
 
 #include "../Text/Text.h"
+#include "../Audio/Audio.h"
 #include <memory>
-// #include<string.h>
 
 using std::make_unique;
 using std::unique_ptr;
@@ -11,28 +11,27 @@ using std::unique_ptr;
 class Score
 {
 private:
-    int64_t hiScore_ = 0;
+    int hiScore_ = 0;
     float currentScore_ = 0;
     int currentScoreInt = 0;
-    const uint SCORE_RATIO = 8;
+    int soundUpdate ;
 
-    int effectCounter = 0;
-    const int SCORE_SOUND_INTERVAL = 100;
+    SDL_Rect hiScore_r = {0, 0, 140, 40};
+    Vector hiScore_p{SCREEN_WIDTH - 320, 20};
 
-    SDL_Rect hiScore_r = {0, 0, 200, 100};
-    Vector hiScore_p{SCREEN_WIDTH - 400, 20};
-
-    SDL_Rect currentScore_r{0, 0, 100, 100};
+    SDL_Rect currentScore_r{0, 0, 100, 40};
     Vector currentScore_p{SCREEN_WIDTH - 150, 20};
 
 public:
     Score();
-
     unique_ptr<Text> hiScore;
     unique_ptr<Text> currentScore;
 
     void updateHiScore();
-
+    void intToStr(int num, char *str, int width)
+    {
+        snprintf(str, width + 1, "%0*d", width, num);
+    }
     void reset();
     void update(float time);
     void render();

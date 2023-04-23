@@ -1,8 +1,8 @@
 #include "Audio.h"
 
-Mix_Chunk *loadSound(string path)
+Mix_Chunk *loadSound(const char *path)
 {
-    Mix_Chunk *tmp = Mix_LoadWAV(path.c_str());
+    Mix_Chunk *tmp = Mix_LoadWAV(path);
 
     if (tmp == nullptr)
     {
@@ -11,9 +11,9 @@ Mix_Chunk *loadSound(string path)
 
     return tmp;
 }
-Mix_Music *loadMusic(string path)
+Mix_Music *loadMusic(const char *path)
 {
-    Mix_Music *tmp = Mix_LoadMUS(path.c_str());
+    Mix_Music *tmp = Mix_LoadMUS(path);
 
     if (tmp == nullptr)
     {
@@ -23,7 +23,7 @@ Mix_Music *loadMusic(string path)
     return tmp;
 }
 
-void playSound(string path)
+void playSound(const char *path)
 {
     if (sounds[path] == nullptr)
     {
@@ -32,11 +32,16 @@ void playSound(string path)
 
     Mix_PlayChannel(-1, sounds[path], 0);
 }
-void playMusic(string path)
+void playMusic(const char *path)
 {
     if (backgrounds[path] == nullptr)
     {
         backgrounds[path] = loadMusic(path);
+        if (backgrounds[path] == nullptr)
+        {
+            SDL_Log("Failed to play music.");
+            return;
+        }
     }
 
     Mix_PlayMusic(backgrounds[path], -1);
@@ -67,14 +72,5 @@ void unMute()
     for (auto sound : sounds)
     {
         Mix_VolumeChunk(sound.second, MIX_MAX_VOLUME);
-    }
-}
-
-void setVolume(int vol)
-{
-    Mix_VolumeMusic(vol);
-    for (auto sound : sounds)
-    {
-        Mix_VolumeChunk(sound.second, vol);
     }
 }

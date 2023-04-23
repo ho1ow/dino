@@ -1,24 +1,25 @@
 #ifndef AUDIO_H
 #define AUDIO_H
 
-#include "../Utils/CommonVariable.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
+#include <map>
 #include <string>
-using namespace std;
 
-    static map<string, Mix_Chunk *> sounds{};
-    static map<string, Mix_Music *> backgrounds{};
+static std::map<const char *, Mix_Chunk *> sounds{};
+static std::map<const char *, Mix_Music *> backgrounds{};
 
-    Mix_Chunk *loadSound(string path);
-    Mix_Music *loadMusic(string path);
+Mix_Chunk *loadSound(const char *path);
+Mix_Music *loadMusic(const char *path);
 
-    void playSound(string path);
-    void playMusic(string path);
+void playSound(const char *path);
+void playMusic(const char *path);
 
-    void pauseMusic();
-    void resumeMusic();
-    void mute();
-    void unMute();
+void pauseMusic();
+void resumeMusic();
+void mute();
+void unMute();
 
-    void setVolume(int vol);
+void setVolume(int vol);
 
 #endif

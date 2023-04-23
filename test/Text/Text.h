@@ -4,6 +4,9 @@
 #include "../Utils/CommonVariable.h"
 #include "../Utils/Vector.h"
 
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL.h>
+#include <iostream>
 class Text
 {
 private:
@@ -15,8 +18,7 @@ private:
     SDL_Rect *rect;
 
 public:
-    TTF_Font *font = TTF_OpenFont("res/fonts/PressStart2P-Regular.ttf", 24);
-
+    
     Text(const char *text, SDL_Rect *rect, Vector pos, double scale = 1);
     ~Text(){};
 
@@ -33,5 +35,4 @@ public:
     void update();
     void render();
 };
-
 #endif

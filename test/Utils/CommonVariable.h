@@ -11,6 +11,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 #include <iostream>
+#include "../Audio/Audio.h"
 
 extern const int SCREEN_WIDTH;
 extern const int SCREEN_HEIGHT;
@@ -21,14 +22,13 @@ extern SDL_Renderer *renderer;
 extern SDL_Event event;
 
 extern const char *dinoSprite;
-extern const char *fontPath;
 struct
 {
     struct
     {
         const char *path = "res/buttons/pause.png";
         SDL_Rect rect{35, 2, 33, 33};
-        SDL_Rect resume{2,2,33,33};
+        SDL_Rect resume{2, 2, 33, 33};
     } pause;
 
     struct
@@ -44,16 +44,16 @@ struct
         SDL_Rect rect{0, 0, 32, 32};
     } exit;
 
-    struct 
+    struct
     {
-        const char *path= "res/buttons/play.png";
-        SDL_Rect rect{0,0,200,61};
+        const char *path = "res/buttons/play.png";
+        SDL_Rect rect{0, 0, 200, 61};
     } play;
-    struct 
+    struct
     {
-        const char *path="res/buttons/exit.png";
-        SDL_Rect rect{0,0,200,61};
-    }  exit_;
+        const char *path = "res/buttons/exit.png";
+        SDL_Rect rect{0, 0, 200, 61};
+    } exit_;
 } buttons;
 
 extern bool checkCollision(const SDL_Rect &a, const SDL_Rect &b);
