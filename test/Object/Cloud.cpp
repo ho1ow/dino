@@ -8,17 +8,13 @@ Cloud::Cloud(const char *path) : Texture(path)
     }
 }
 
-// Vector Cloud::ranCloudPos()
-// {
-//     return {Random::random(SCREEN_WIDTH, Random::random(SCREEN_WIDTH, SCREEN_WIDTH * 4)), Random::random(150, SCREEN_HEIGHT / 3)};
-// }
 Vector Cloud::ranCloudPos()
 {
     Vector newPos;
     bool validPos = false;
     while (!validPos)
     {
-        newPos = {Random::random(SCREEN_WIDTH, Random::random(SCREEN_WIDTH, SCREEN_WIDTH * 4)), Random::random(150, SCREEN_HEIGHT / 3)};
+        newPos = {Random::random(SCREEN_WIDTH, Random::random(SCREEN_WIDTH, SCREEN_WIDTH * 4)), Random::random(50, SCREEN_HEIGHT / 3)};
         validPos = true;
         for (auto &pos : clouds)
         {

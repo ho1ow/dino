@@ -1,10 +1,10 @@
 #ifndef DINO_H
 #define DINO_H
-#include "../Texture.h"
+#include "../Utils/Texture.h"
 
 class Dino : public Texture
 {
-protected:
+private:
     const int padding = 20;
 
     const int GRAVITY = 1;

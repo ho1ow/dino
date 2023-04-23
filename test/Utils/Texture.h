@@ -1,9 +1,9 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
-#include "commonVar.h"
-#include "Utils/Vector.h"
-#include "Utils/Random.h"
+#include "CommonVariable.h"
+#include "Vector.h"
+#include "Random.h"
 
 class Texture
 {
@@ -19,11 +19,9 @@ public:
     SDL_Texture *getTexture();
     
     SDL_Rect *getRect();
-        
+    
     int getRectWidth();
     int getRectHeight();
-    int getRectX();
-    int getRectY();
 
     Texture(const char *path);
     Texture(const char *path, const double scale_);

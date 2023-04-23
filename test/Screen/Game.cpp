@@ -1,34 +1,25 @@
 #include "Game.h"
-#include "../Utils/Timer.h"
-
-bool Game::isGameOver = false;
-bool Game::isPause = false;
-bool Game::isReset = false;
 
 Game::Game()
 {
     isRunning = true;
+    isGameOver = false;
+    isPause = false;
+    isReset = false;
+    isPlay = false;
+    isMute = false;
+
     background = new Background();
     moveObject = new MoveObject();
+    menu = new Menu();
+    score = new Score();
+
 }
 Game::~Game()
 {
-    delete background;
-    delete moveObject;
-}
-
-void Game::update()
-{
-    if (isGameOver || isPause)
-    {
-        return;
-    }
-    background->update();
-    moveObject->update();
 }
 void Game::handleEvents()
 {
-
     while (SDL_PollEvent(&event))
     {
         switch (event.type)
@@ -42,20 +33,41 @@ void Game::handleEvents()
             case SDLK_ESCAPE:
                 isRunning = false;
                 break;
+            case SDLK_p:
+                if (!isGameOver)
+                {
+                    if (!isPause)
+                    {
+                        paused();
+                    }
+                    else
+                    {
+                        resume();
+                    }
+                }
+                break;
+            case SDLK_m:
+                if (isMute)
+                {
+                    unmute();
+                }
+                else
+                {
+                    mute();
+                }
+                break;
             case SDLK_SPACE:
                 if (isGameOver)
                 {
                     isReset = true;
                 }
-                if(isPause)
+                if (isPause)
                 {
-                    isPause=false;
+                    resume();
                 }
-                break;
-            case SDLK_p:
-                if(!isGameOver)
+                if (!isPlay)
                 {
-                    isPause=!isPause;
+                    isPlay = true;
                 }
                 break;
             case SDLK_1:
@@ -64,41 +76,53 @@ void Game::handleEvents()
             case SDLK_2:
                 background->setIsNight();
                 break;
+            case SDLK_b:
+                if (isGameOver)
+                {
+                    returnMenu();
+                }
+                break;
             default:
                 break;
             }
+
+        case SDL_MOUSEBUTTONDOWN:
+            handleMouseClick();
             break;
-        
         default:
             break;
         }
-        if(!isGameOver && !isPause)
+        if (!isGameOver && !isPause)
         {
             moveObject->handleEvent();
         }
     }
-    handleCollision();
+    if (isPlay)
+    {
+        handleCollision();
+    }
+}
+void Game::update()
+{
+    if (isGameOver || isPause || !isPlay)
+    {
+        return;
+    }
+    background->update();
+    moveObject->update();
+    score->update(100);
 }
 void Game::render()
 {
-
     background->renderCloudAndRoad(renderer);
     moveObject->render(renderer);
-}
-
-void Game::handleCollision()
-{
-    isCollide = moveObject->isCollide();
-    if (isCollide)
-    {
-        moveObject->setDinoDied();
-        gameOver();
-    }
+    score->render();
 }
 void Game::gameOver()
 {
-    isGameOver = true;
     background->renderGameOver(renderer);
+    isGameOver = true;
+
     if (isReset)
     {
         reset();
@@ -109,18 +133,89 @@ void Game::reset()
 {
     background->reset();
     moveObject->reset();
-    isCollide = false;
+    score->reset();
     isGameOver = false;
+}
+void Game::returnMenu()
+{
+    reset();
+    background->update();
+    moveObject->update();
+    score->update(0);
+    isPlay = false;
+}
+void Game::paused()
+{
+    isPause = true;
+    background->pauseBg();
+}
+void Game::resume()
+{
+    isPause = false;
+    background->resumeBg();
+}
+void Game::mute()
+{
+    isMute = true;
+}
+void Game::unmute()
+{
+    isMute = false;
+}
+void Game::handleCollision()
+{
+    if (moveObject->isCollide())
+    {
+        moveObject->setDinoDied();
+        gameOver();
+    }
+}
+void Game::handleMouseClick()
+{
+    if (event.button.button == SDL_BUTTON_LEFT)
+    {
+        if (menu->play->isInside())
+        {
+            isPlay = true;
+        }
+        if (menu->exit->isInside())
+        {
+            isRunning = false;
+        }
+        if (background->pause->isInside())
+        {
+            if (!isGameOver)
+            {
+                if (!isPause)
+                {
+                    paused();
+                }
+                else
+                {
+                    resume();
+                }
+            }
+        }
+    }
 }
 
 void Game::run()
 {
     while (isRunning)
     {
-        background->renderBg(renderer);
+        std::cerr << isPlay << " " << moveObject->isCollide() << std::endl;
+        if (!isPlay)
+        {
+            menu->render(renderer);
+            menu->update();
+        }
+        else
+        {
+            background->renderBg(renderer);
+            render();
+            update();
+        }
 
-        render();
-        update();
         handleEvents();
 
         SDL_RenderPresent(renderer);

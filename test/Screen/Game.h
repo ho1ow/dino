@@ -3,36 +3,52 @@
 
 #include "Background.h"
 #include "MoveObject.h"
+#include "Menu.h"
+#include "../Object/Score.h"
 
 class Game
 {
 private:
     Background *background;
     MoveObject *moveObject;
-    
-    static bool isGameOver;
-    static bool isPause;
-    static bool isReset;
+    Menu *menu;
+    Score *score;
+
+    bool isRunning;
+    bool isPlay;
+    bool isGameOver;
+    bool isPause;
+    bool isReset;
+    bool isMute;
+    bool isCollide;
+    bool isReturnMenu;
 
 public:
     Game();
     ~Game();
-    bool isRunning;
 
     void handleEvents();
     void update();
     void render();
 
-    bool isCollide;
     void handleCollision();
+    void handleMouseClick();
 
     void gameOver();
     void reset();
-    
-    static void paused();
-    static void resume();
+
+    void paused();
+    void resume();
+
+    void mute();
+    void unmute();
+
+    void returnMenu();
 
     void run();
+
+
 };
+
 
 #endif

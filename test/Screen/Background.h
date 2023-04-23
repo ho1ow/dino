@@ -3,22 +3,18 @@
 
 #include "../Object/Cloud.h"
 #include "../Object/Road.h"
-#include "../Texture.h"
-#include "Button.h"
+#include "../Object/Button.h"
 class Background
 {
 private:
-
     Cloud *cloud;
     Road *road;
 
     Texture *gameover;
     Texture *restartButton;
 
-    Button *pause;
-
     SDL_Color color;
-    SDL_Color night = {0, 0, 0, 255};
+    SDL_Color night = {15, 15, 15, 255};
     SDL_Color day = {255, 255, 255, 255};
     bool isNight = false;
     const int change = 5;
@@ -26,6 +22,9 @@ private:
 public:
     Background();
     ~Background();
+    
+    Button *pause;
+    Button *music;
 
     void update();
     void renderCloudAndRoad(SDL_Renderer *renderer);
@@ -38,6 +37,9 @@ public:
     void renderBg(SDL_Renderer *renderer);
     void renderGameOver(SDL_Renderer *renderer);
     void reset();
+
+    void pauseBg();
+    void resumeBg();
 };
 
 #endif

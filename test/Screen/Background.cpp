@@ -9,8 +9,11 @@ Background::Background()
     gameover = new Texture(sheet, 1);
     restartButton = new Texture(sheet, 1);
 
-    pause = new Button(buttons.pause.path, 1.5);
-    pause->setRect(&buttons.pause.rect);
+    pause = new Button(buttons.pause.path, &buttons.pause.rect, 1.5);
+    pause->setPos({10, 10});
+
+    music = new Button(buttons.musicSetting.path, &buttons.musicSetting.rect, 1.5);
+    music->setPos({62, 10});
 
     color = {255, 255, 255, 255};
 }
@@ -79,6 +82,9 @@ void Background::update()
     cloud->update();
     road->update(road->getRect());
     road->set_speed(4);
+
+    pause->hover();
+    music->hover();
 }
 void Background::renderCloudAndRoad(SDL_Renderer *renderer)
 {
@@ -94,6 +100,7 @@ void Background::renderCloudAndRoad(SDL_Renderer *renderer)
     }
 
     pause->render(renderer, pause->getRect());
+    music->render(renderer, music->getRect());
 }
 
 void Background::renderBg(SDL_Renderer *renderer)
@@ -118,6 +125,8 @@ void Background::renderGameOver(SDL_Renderer *renderer)
     SDL_Rect restartButton_r{2, 2, 72, 64};
     Vector restartButtonPos = {static_cast<int>(SCREEN_WIDTH - restartButton_r.w) / 2, static_cast<int>((SCREEN_HEIGHT - restartButton_r.h) / 2)};
     restartButton->renderWithPosAndScale(renderer, &restartButton_r, restartButtonPos, 1);
+    
+    pause->afterClick();
 }
 
 void Background::reset()
@@ -125,4 +134,14 @@ void Background::reset()
     setIsDay();
     cloud->reset();
     road->reset();
+}
+void Background::pauseBg()
+{
+    pause->setRect(&buttons.pause.resume);
+    pause->afterClick();
+}
+void Background::resumeBg()
+{
+    pause->setRect(&buttons.pause.rect);
+    pause->afterClick();
 }

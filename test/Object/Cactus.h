@@ -1,11 +1,11 @@
 #ifndef CACTUS_H
 #define CACTUS_H
 
-#include "../Texture.h"
+#include "../Utils/Texture.h"
 
 class Cactus : public Texture
 {
-protected:
+private:
     static const int CACTUS_VEL = -10;
     const int padding = 16;
 

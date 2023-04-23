@@ -1,14 +1,14 @@
 #ifndef DINO_CLOUD_H
 #define DINO_CLOUD_H
 
-#include "../Texture.h"
+#include "../Utils/Texture.h"
 
 class Cloud : public Texture
 {
-protected:
+private:
     static const int MAX_CLOUDS = 5;
     static const int CLOUD_VEL = -5;
-    const int MIN_CLOUD_DIST = 150;
+    const int MIN_CLOUD_DIST = 500;
 
     Vector clouds[MAX_CLOUDS];
 

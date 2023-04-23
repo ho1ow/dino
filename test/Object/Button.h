@@ -1,24 +1,27 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-#include "../Texture.h"
+#include "../Utils/Texture.h"
 
 class Button : public Texture
 {
 private:
+    Vector pos{10, 10};
+
 public:
-    Button(const char *path, const double scale);
+    Button(const char *path, SDL_Rect *rect, const double scale);
     ~Button();
-    Vector pos{10,10};
+
+    bool isInside();
 
     void setPos(Vector pos);
+    Vector getPos(Vector pos);
+
     void setRect(SDL_Rect *rect);
-    void setScrRectX(int x);
 
-    void isHovered();
-    void isClicked();
+    void hover();
+    void afterClick();
 
-    void update();
     void render(SDL_Renderer *renderer_, SDL_Rect *rect);
 };
 

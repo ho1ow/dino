@@ -37,14 +37,12 @@ void Dino::duck(SDL_Event &event)
     {
         if (event.key.keysym.sym == SDLK_DOWN && isDucking)
         {
-            // End duck
             isDucking = false;
         }
     }
 }
 void Dino::updatePos()
 {
-    // Update player position with fixed time step
     dinoPos.y += velY;
 
     if (isJumping && jumpDelay > 0)
@@ -54,13 +52,11 @@ void Dino::updatePos()
     }
     else
     {
-        // Apply gravity
         velY += GRAVITY;
 
-        // Check if player hits the bottom of the screen
-        if (dinoPos.y + getRectHeight() + 10 > SCREEN_HEIGHT)
+        if (dinoPos.y + getRectHeight() + 20 > SCREEN_HEIGHT)
         {
-            dinoPos.y = SCREEN_HEIGHT - getRectHeight() - 10;
+            dinoPos.y = SCREEN_HEIGHT - getRectHeight() - 20;
             velY = 0;
             isJumping = false;
         }
@@ -113,7 +109,7 @@ void Dino::getDinoFrame()
 }
 void Dino::updateHitBox()
 {
-    hitBox = {dinoPos.x + static_cast<int>(padding * scale), dinoPos.y + static_cast<int>(padding * scale), getRectWidth() - static_cast<int>(padding * 2 * scale), getRectHeight() - static_cast<int>(padding * scale)};
+    hitBox = {dinoPos.x + static_cast<int>(padding * 1.5 * scale), dinoPos.y + static_cast<int>(padding * scale), getRectWidth() - static_cast<int>(padding * 2 * scale), getRectHeight() - static_cast<int>(padding * 2 * scale)};
 }
 void Dino::update()
 {
@@ -132,9 +128,9 @@ void Dino::render(SDL_Renderer *renderer_, SDL_Rect *rect)
     else
     {
 
-        if (dinoPos.y >= 579)
+        if (dinoPos.y >= 569)
         {
-            dinoPos.y = 549;
+            dinoPos.y = 539;
         }
         Texture::renderWithPosAndScale(renderer_, &dino.died, dinoPos, scale);
     }

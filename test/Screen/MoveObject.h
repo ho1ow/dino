@@ -4,12 +4,12 @@
 #include "../Object/Cactus.h"
 #include "../Object/Ptero.h"
 #include "../Object/Dino.h"
-#include "../Texture.h"
+#include "../Utils/Texture.h"
 
 
 class MoveObject
 {
-protected:
+private:
     Dino *dino;
     Cactus *cactus;
     Ptero *ptero;

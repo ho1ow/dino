@@ -1,13 +1,13 @@
 #ifndef PTERO_H
 #define PTERO_H
 
-#include "../Texture.h"
+#include "../Utils/Texture.h"
 
 class Ptero : public Texture
 {
-protected:
+private:
     static const int PTERO_VEL = -15;
-    const int padding = 10;
+    const int padding = 12;
 
     struct
     {

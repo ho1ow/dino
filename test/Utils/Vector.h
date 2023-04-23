@@ -1,6 +1,8 @@
 #ifndef VECTOR_H    
 #define VECTOR_H
-#include "../commonVar.h"
+
+#include <cmath>
+#include <iostream>
 struct Vector
 {
     int x, y;
