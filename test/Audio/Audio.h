@@ -17,9 +17,9 @@ void playMusic(const char *path);
 
 void pauseMusic();
 void resumeMusic();
-void mute();
-void unMute();
+void muteAudio();
+void unMuteAudio();
 
-void setVolume(int vol);
+void cleanupAudio();
 
 #endif

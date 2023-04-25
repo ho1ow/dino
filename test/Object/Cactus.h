@@ -22,8 +22,8 @@ private:
 public:
     Cactus(const char *path, const double scale_);
     ~Cactus(){};
-    SDL_Rect hitBox;
 
+    SDL_Rect hitBox;
     Vector cactusPos;
     Vector ranCactusPos();
     void getCactusPos();
@@ -32,6 +32,7 @@ public:
     void getCactusType();
 
     void render(SDL_Renderer *renderer, SDL_Rect *rect);
+    void updateHitBox();
     void update();
     void reset();
 };

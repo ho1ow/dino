@@ -20,7 +20,7 @@ private:
 public:
     
     Text(const char *text, SDL_Rect *rect, Vector pos, double scale = 1);
-    ~Text(){};
+    ~Text();
 
     void createTexture(const char *text);
 

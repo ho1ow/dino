@@ -6,13 +6,24 @@ Score::Score()
     this->currentScore = make_unique<Text>("00000", &currentScore_r, currentScore_p);
     soundUpdate = 0;
 }
+Score::~Score()
+{
+    /*
+        std::ofstream hiScoreFile("hiscore.txt");
+        if (hiScoreFile.is_open())
+        {
+            hiScoreFile << hiScore_;
+            hiScoreFile.close();
+        }
+    */
+}
 void Score::updateHiScore()
 {
     if (hiScore_ == currentScoreInt)
         return;
-    if (hiScore_ < currentScoreInt)
+    if (hiScore_ <= currentScoreInt)
     {
-        hiScore_ = currentScoreInt - 1;
+        hiScore_ = currentScoreInt;
 
         char hiStr[6];
         intToStr(currentScoreInt, hiStr, 5);
@@ -38,7 +49,7 @@ void Score::update(float time)
         currentScore->updateText(str);
         lastFrameTime = currentTime;
     }
-    if (currentScoreInt > 0 && hiScore_ != 0 && currentScoreInt - 1 > hiScore_ && soundUpdate == 0)
+    if (currentScoreInt > 0 && hiScore_ != 0 && currentScoreInt > hiScore_ && soundUpdate == 0)
     {
         playSound("res/sounds/coin.wav");
         soundUpdate = 1;

@@ -5,6 +5,8 @@
 #include "MoveObject.h"
 #include "Menu.h"
 #include "../Object/Score.h"
+#include <thread>
+
 
 class Game
 {
@@ -22,6 +24,7 @@ private:
     bool isMute;
     bool isCollide;
     bool isReturnMenu;
+    bool isClick=false;
 
 public:
     Game();
@@ -46,7 +49,10 @@ public:
 
     void returnMenu();
 
+    void gameUpdateLevel();
+    
     void run();
+    void clean();
 
 
 };

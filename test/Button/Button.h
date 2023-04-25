@@ -10,7 +10,7 @@ private:
 
 public:
     Button(const char *path, SDL_Rect *rect, const double scale);
-    ~Button();
+    ~Button(){};
 
     bool isInside();
 

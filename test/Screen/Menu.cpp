@@ -10,6 +10,12 @@ Menu::Menu()
 
     bg = new Texture("res/img/background.png");
 }
+Menu::~Menu()
+{
+    delete bg;
+    delete play;
+    delete exit;
+}
 
 void Menu::render(SDL_Renderer *renderer)
 {

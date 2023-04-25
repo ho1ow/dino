@@ -23,6 +23,8 @@ Background::~Background()
     delete road;
     delete gameover;
     delete restartButton;
+    delete pause;
+    delete music;
 }
 
 void Background::setNight()
@@ -127,6 +129,7 @@ void Background::renderGameOver(SDL_Renderer *renderer)
     restartButton->renderWithPosAndScale(renderer, &restartButton_r, restartButtonPos, 1);
     
     pause->afterClick();
+    music->afterClick();
 }
 
 void Background::reset()

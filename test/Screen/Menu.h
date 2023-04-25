@@ -17,7 +17,6 @@ public:
     
     void render(SDL_Renderer *renderer);
     void update();
-    void reset();
 };
 
 #endif

@@ -3,50 +3,32 @@
 MoveObject::MoveObject()
 {
     dino = new Dino(sheet, 1.5);
-    cactus = new Cactus(sheet, 1.5);
-    ptero = new Ptero(sheet, 1.5);
-    if (dino == NULL || cactus == NULL || ptero == NULL)
-    {
-        std::cerr << "Error: MoveObject::MoveObject() failed to allocate memory for dino, cactus or ptero" << std::endl;
-        exit(0);
-    }
+    threat = new Threat();
 }
 
 MoveObject::~MoveObject()
 {
     delete dino;
-    delete cactus;
-    delete ptero;
+    delete threat;
 }
-
 void MoveObject::update()
 {
     dino->update();
-    cactus->update();
-    ptero->update();
+    threat->update();
 }
 void MoveObject::render(SDL_Renderer *renderer)
 {
     dino->render(renderer, dino->getRect());
-    cactus->render(renderer, cactus->getRect());
-    ptero->render(renderer, ptero->getRect());
+    threat->render(renderer);
 }
-void MoveObject::handleEvent()
+void MoveObject::handleDinoEvent()
 {
     dino->jump(event);
     dino->duck(event);
 }
 bool MoveObject::isCollide()
 {
-    if (SDL_HasIntersection(&(cactus->hitBox), &(dino->hitBox)) == SDL_TRUE)
-    {
-        return true;
-    }
-    if (SDL_HasIntersection(&(ptero->hitBox), &(dino->hitBox)) == SDL_TRUE)
-    {
-        return true;
-    }
-    return false;
+   return threat->isCollide(dino->hitBox);
 }
 void MoveObject::setDinoDied()
 {
@@ -57,6 +39,10 @@ void MoveObject::reset()
 {
 
     dino->reset();
-    cactus->reset();
-    ptero->reset();
+    threat->reset();
+}
+
+void MoveObject::upLevel()
+{
+    threat->upLevel();
 }

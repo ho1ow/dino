@@ -12,6 +12,10 @@ Text::Text(const char *text, SDL_Rect *rect, Vector pos, double scale)
     }
     createTexture(text);
 }
+Text::~Text()
+{
+
+}
 void Text::createTexture(const char *text)
 {
     TTF_Font *font = TTF_OpenFont("res/fonts/PressStart2P-Regular.ttf", 15);

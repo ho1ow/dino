@@ -13,12 +13,10 @@ Dino::~Dino()
 
 void Dino::jump(SDL_Event &event)
 {
-
     if (event.type == SDL_KEYDOWN)
     {
         if (event.key.keysym.sym == SDLK_SPACE && !isJumping)
         {
-            // Start jump
             velY = JUMP_VELOCITY;
             isJumping = true;
             jumpDelay = JUMP_DELAY_TIME;

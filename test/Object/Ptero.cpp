@@ -3,7 +3,7 @@
 Ptero::Ptero(const char *path, const double scale_) : Texture(path, scale_)
 {
     crect = &ptero.rect;
-    PteroPos = ranPteroPos();
+    getPteroPos();
 }
 
 void Ptero::getPteroPos()
@@ -45,7 +45,7 @@ void Ptero::update()
     {
         getPteroPos();
     }
-    PteroPos.x += PTERO_VEL;
+    PteroPos.x += VEL * 1.5;
     updateHitBox();
     getPteroFrame();
 }

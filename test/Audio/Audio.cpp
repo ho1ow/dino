@@ -57,16 +57,15 @@ void resumeMusic()
     Mix_ResumeMusic();
 }
 
-void mute()
+void muteAudio()
 {
-    //            Mix_Volume()
     Mix_VolumeMusic(0);
     for (auto sound : sounds)
     {
         Mix_VolumeChunk(sound.second, 0);
     }
 }
-void unMute()
+void unMuteAudio()
 {
     Mix_VolumeMusic(MIX_MAX_VOLUME);
     for (auto sound : sounds)

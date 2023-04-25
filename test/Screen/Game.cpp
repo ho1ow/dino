@@ -2,20 +2,26 @@
 
 Game::Game()
 {
-    // int mixFlags = MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_FLAC;
-    // if (!(Mix_Init(mixFlags) & mixFlags))
-    // {
-    //     std::cerr << "1";
-    //     exit(0);
-    // }
-
-    // if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1)
-    // {
-    //     std::cerr << "0";
-
-    //     exit(0);
-    // }
-    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
+    {
+        std::cerr << "Failed to initialize SDL: " << SDL_GetError() << std::endl;
+        exit(1);
+    }
+    if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG)
+    {
+        std::cerr << "Failed to initialize SDL_image: " << IMG_GetError() << std::endl;
+        exit(1);
+    }
+    if (TTF_Init() < 0)
+    {
+        std::cerr << "Failed to initialize SDL_ttf: " << TTF_GetError() << std::endl;
+        exit(1);
+    }
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+    {
+        std::cerr << "Failed to initialize SDL_mixer: " << Mix_GetError() << std::endl;
+        exit(1);
+    }
 
     isRunning = true;
     isGameOver = false;
@@ -32,6 +38,10 @@ Game::Game()
 }
 Game::~Game()
 {
+    delete background;
+    delete moveObject;
+    delete menu;
+    delete score;
 }
 void Game::handleEvents()
 {
@@ -52,7 +62,7 @@ void Game::handleEvents()
         }
         if (!isGameOver && !isPause)
         {
-            moveObject->handleEvent();
+            moveObject->handleDinoEvent();
         }
     }
     if (isPlay)
@@ -69,6 +79,14 @@ void Game::update()
     background->update();
     moveObject->update();
     score->update(100);
+    // if ((score->getScore() + 1) % 50 == 0)
+    // {
+    //     gameUpdateLevel();
+    // }
+}
+void Game::gameUpdateLevel()
+{
+    moveObject->upLevel();
 }
 void Game::render()
 {
@@ -98,8 +116,8 @@ void Game::reset()
 void Game::returnMenu()
 {
     reset();
-    background->update();
-    moveObject->update();
+    // background->update();
+    // moveObject->update();
     isPlay = false;
 }
 void Game::paused()
@@ -115,10 +133,14 @@ void Game::resume()
 void Game::mute()
 {
     isMute = true;
+    muteAudio();
+    background->music->setRect(&buttons.musicSetting.mute);
 }
 void Game::unmute()
 {
     isMute = false;
+    unMuteAudio();
+    background->music->setRect(&buttons.musicSetting.rect);
 }
 void Game::handleCollision()
 {
@@ -134,7 +156,6 @@ void Game::handleMouseClick()
     {
         if (menu->play->isInside())
         {
-            playSound("res/sounds/click.wav");
             isPlay = true;
         }
         if (menu->exit->isInside())
@@ -145,6 +166,7 @@ void Game::handleMouseClick()
         {
             if (!isGameOver)
             {
+                playSound("res/sounds/click.wav");
                 if (!isPause)
                 {
                     paused();
@@ -153,6 +175,17 @@ void Game::handleMouseClick()
                 {
                     resume();
                 }
+            }
+        }
+        if (background->music->isInside())
+        {
+            if (isMute)
+            {
+                unmute();
+            }
+            else
+            {
+                mute();
             }
         }
     }
@@ -222,7 +255,6 @@ void Game::run()
 {
     while (isRunning)
     {
-        // std::cerr << isPlay << " " << moveObject->isCollide() << std::endl;
         if (!isPlay)
         {
             menu->render(renderer);
@@ -240,4 +272,13 @@ void Game::run()
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
     }
+}
+void Game::clean()
+{
+    SDL_DestroyWindow(window);
+    SDL_DestroyRenderer(renderer);
+    SDL_Quit();
+    IMG_Quit();
+    TTF_Quit();
+    Mix_Quit();
 }

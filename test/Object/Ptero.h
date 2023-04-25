@@ -6,7 +6,6 @@
 class Ptero : public Texture
 {
 private:
-    static const int PTERO_VEL = -15;
     const int padding = 12;
 
     struct
@@ -29,8 +28,8 @@ public:
     void render(SDL_Renderer *renderer, SDL_Rect *rect);
     void update();
     void updateHitBox();
-
     void reset();
+
 };
 
 #endif

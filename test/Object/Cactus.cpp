@@ -40,7 +40,11 @@ void Cactus::update()
         getCactusType();
         getCactusPos();
     }
-    cactusPos.x += CACTUS_VEL;
+    cactusPos.x += VEL;
+    updateHitBox();
+}
+void Cactus::updateHitBox()
+{
     hitBox = {cactusPos.x + static_cast<int>(padding * scale), cactusPos.y + static_cast<int>(padding * scale), getRectWidth() - static_cast<int>(padding * scale) * 2, getRectHeight() - static_cast<int>(padding * scale) * 2};
 }
 void Cactus::reset()

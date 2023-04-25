@@ -10,6 +10,7 @@ using std::unique_ptr;
 
 class Score
 {
+
 private:
     int hiScore_ = 0;
     float currentScore_ = 0;
@@ -24,6 +25,7 @@ private:
 
 public:
     Score();
+    ~Score();
     unique_ptr<Text> hiScore;
     unique_ptr<Text> currentScore;
 
