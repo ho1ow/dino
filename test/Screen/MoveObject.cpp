@@ -20,6 +20,7 @@ void MoveObject::render(SDL_Renderer *renderer)
 {
     dino->render(renderer, dino->getRect());
     threat->render(renderer);
+    std::cerr<<threat->getNum()<<std::endl;
 }
 void MoveObject::handleDinoEvent()
 {
@@ -28,7 +29,7 @@ void MoveObject::handleDinoEvent()
 }
 bool MoveObject::isCollide()
 {
-   return threat->isCollide(dino->hitBox);
+    return threat->isCollide(dino->hitBox);
 }
 void MoveObject::setDinoDied()
 {
@@ -37,12 +38,32 @@ void MoveObject::setDinoDied()
 }
 void MoveObject::reset()
 {
-
     dino->reset();
     threat->reset();
 }
 
+void MoveObject::initRandom()
+{
+    int a = Random::random(1, 2);
+    if (a == 1)
+    {
+        threat->increaseCactus();
+    }
+    else
+    {
+        threat->increasePtero();
+    }
+}
 void MoveObject::upLevel()
 {
-    threat->upLevel();
+    threat->getPteroNum() == 1 ? threat->increaseCactus() : initRandom();
+}
+void MoveObject::resetLevel()
+{
+    if (threat->getNum() > 3)
+    {
+        threat->setDefault();
+        std::cerr << "is set" << std::endl;
+    }
+
 }

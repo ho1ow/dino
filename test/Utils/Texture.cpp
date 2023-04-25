@@ -35,7 +35,6 @@ int Texture::getRectHeight()
     return static_cast<int>(crect->h * scale);
 }
 
-
 void Texture::renderScroll(SDL_Renderer *renderer_, SDL_Rect *rect)
 {
     SDL_Rect destRect = {x_, SCREEN_HEIGHT - rect->h - 20, rect->w, rect->h};
@@ -72,4 +71,3 @@ bool Texture::offScreen(Vector pos)
     }
     return false;
 }
-

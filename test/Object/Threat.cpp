@@ -2,74 +2,145 @@
 
 Threat::Threat()
 {
-    initCactus();
-    initPtero();
+    MaxCactus=1;
+    MaxPtero=0;
 }
 Threat::~Threat()
 {
-    remove();
+    removeAll();
 }
 
 void Threat::initCactus()
 {
-    allCactus.push_back(new Cactus(sheet, 1.5));
+    if (allCactus.empty())
+    {
+        // allCactus.emplace_back(std::make_unique<Cactus>(sheet, 1.5));
+        allCactus.push_back(std::make_unique<Cactus>(sheet, 1.5));
+    }
+    else
+    {
+        bool validPos = false;
+        while (!validPos)
+        {
+            auto tmpCactus = std::make_unique<Cactus>(sheet, 1.5);
+            validPos = true;
+            for (const auto &cactus : allCactus)
+            {
+                if (Vector::distance(allCactus.back()->getPos(), tmpCactus->getPos()) < SCREEN_WIDTH / 2)
+                {
+                    validPos = false;
+                    break;
+                }
+            }
+            if (validPos)
+            {
+                allCactus.push_back(std::move(tmpCactus));
+            }
+        }
+    }
 }
+
 void Threat::initPtero()
 {
-    allPtero.push_back(new Ptero(sheet, 1.5));
+    allPtero.emplace_back(std::make_unique<Ptero>(sheet, 1.5));
 }
+
 void Threat::update()
 {
-    for (auto threat : allCactus)
+
+    removeOffScreen();
+    if (allCactus.size() < MaxCactus)
+    {
+        initCactus();
+    }
+    if (allPtero.size() < MaxPtero)
+    {
+        initPtero();
+    }
+    for (const auto &threat : allCactus)
     {
         threat->update();
     }
-    for (auto threat : allPtero)
+    for (const auto &threat : allPtero)
     {
         threat->update();
     }
 }
 void Threat::render(SDL_Renderer *renderer)
 {
-    for (auto threat : allCactus)
+    for (const auto &threat : allCactus)
     {
         threat->render(renderer, threat->getRect());
     }
-    for (auto threat : allPtero)
+    for (const auto &threat : allPtero)
     {
         threat->render(renderer, threat->getRect());
     }
 }
 void Threat::reset()
 {
-    remove();
-    initCactus();
-    initPtero();
+    removeAll();
+    MaxCactus = 1;
+    MaxPtero = 0;
 }
-void Threat::remove()
-{
-    for (auto cactus : allCactus)
-    {
-        delete cactus;
-    }
-    allCactus.clear();
 
-    for (auto ptero : allPtero)
-    {
-        delete ptero;
-    }
+void Threat::removeAll()
+{
+    allCactus.clear();
     allPtero.clear();
+}
+void Threat::removeOffScreen()
+{
+    //     auto it = allCactus.begin();
+    //     while (it != allCactus.end())
+    //     {
+    //         if ((*it)->offScreen((*it)->getPos()))
+    //         {
+    //             auto tmp = it;
+    //             it = allCactus.erase(it);
+    //             delete *tmp;
+    //         }
+    //         else
+    //         {
+    //             it++;
+    //         }
+    //     }
+    // }
+    // {
+    //     auto it = allPtero.begin();
+    //     while (it != allPtero.end())
+    //     {
+    //         if ((*it)->offScreen((*it)->getPos()))
+    //         {
+    //             auto tmp = it;
+    //             it = allPtero.erase(it);
+    //             delete *tmp;
+    //         }
+    //         else
+    //         {
+    //             it++;
+    //         }
+    //     }
+    // }
+    allCactus.erase(std::remove_if(allCactus.begin(), allCactus.end(),
+                                   [](const auto &threat)
+                                   { return threat->offScreen(threat->getPos()); }),
+                    allCactus.end());
+    allPtero.erase(std::remove_if(allPtero.begin(), allPtero.end(),
+                                  [](const auto &threat)
+                                  { return threat->offScreen(threat->getPos()); }),
+                   allPtero.end());
 }
 bool Threat::isCollide(SDL_Rect dinohitbox)
 {
-    for (auto threat : allCactus)
+    for (const auto &threat : allCactus)
     {
         if (SDL_HasIntersection(&(threat->hitBox), &dinohitbox) == SDL_TRUE)
         {
             return true;
         }
     }
-    for (auto threat : allPtero)
+    for (const auto &threat : allPtero)
     {
         if (SDL_HasIntersection(&(threat->hitBox), &dinohitbox) == SDL_TRUE)
         {
@@ -78,8 +149,29 @@ bool Threat::isCollide(SDL_Rect dinohitbox)
     }
     return false;
 }
-void Threat::upLevel()
+
+int Threat::getNum()
 {
-    initCactus();
-    // std::cerr << "check number of cactus: " << allCactus.size() << std::endl;
+    return allCactus.size() + allPtero.size();
+}
+int Threat::getCactusNum()
+{
+    return allCactus.size();
+}
+int Threat::getPteroNum()
+{
+    return allPtero.size();
+}
+void Threat::increaseCactus()
+{
+    MaxCactus++;
+}
+void Threat::increasePtero()
+{
+    MaxPtero++;
+}
+void Threat::setDefault()
+{
+    MaxCactus = 0;
+    MaxPtero = 0;
 }

@@ -38,7 +38,7 @@ public:
     void update(float time);
     void render();
 
-    uint getScore();
+    float getScore();
     uint getHiscore();
 };
 

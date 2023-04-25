@@ -22,6 +22,10 @@ Vector Cactus::ranCactusPos()
 
     return {Random::random(SCREEN_WIDTH, Random::random(SCREEN_WIDTH, SCREEN_WIDTH * 2)), SCREEN_HEIGHT - getRectHeight() - 20};
 }
+Vector Cactus::getPos()
+{
+    return cactusPos;
+}
 
 void Cactus::getCactusPos()
 {
@@ -35,11 +39,11 @@ void Cactus::render(SDL_Renderer *renderer_, SDL_Rect *rect)
 
 void Cactus::update()
 {
-    if (this->offScreen(cactusPos))
-    {
-        getCactusType();
-        getCactusPos();
-    }
+    // if (this->offScreen(cactusPos))
+    // {
+    //     getCactusType();
+    //     getCactusPos();
+    // }
     cactusPos.x += VEL;
     updateHitBox();
 }

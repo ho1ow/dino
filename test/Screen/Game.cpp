@@ -34,7 +34,8 @@ Game::Game()
     moveObject = new MoveObject();
     menu = new Menu();
     score = new Score();
-    playMusic("res/sounds/background.mp3");
+    playMusic("res/sounds/bkgr_audio.wav");
+    Mix_VolumeMusic(17);
 }
 Game::~Game()
 {
@@ -77,17 +78,29 @@ void Game::update()
         return;
     }
     background->update();
-    moveObject->update();
     score->update(100);
-    // if ((score->getScore() + 1) % 50 == 0)
-    // {
-    //     gameUpdateLevel();
-    // }
+    gameUpdateLevel();
+    moveObject->resetLevel();
+    moveObject->update();
 }
 void Game::gameUpdateLevel()
 {
-    moveObject->upLevel();
+    float tmpScore = score->getScore() * 10;
+    if ((uint)tmpScore % 250 == 0)
+    {
+        VEL -= 1;
+        std::cerr << "VEL: " << VEL << std::endl;
+    }
+    if ((uint)tmpScore % 400 == 0)
+    {
+        moveObject->upLevel();
+    }
+    if (VEL == -15)
+    {
+        VEL = -12;
+    }
 }
+
 void Game::render()
 {
     background->renderCloudAndRoad(renderer);
@@ -111,13 +124,13 @@ void Game::reset()
     background->reset();
     moveObject->reset();
     score->reset();
+    VEL = -10;
     isGameOver = false;
 }
 void Game::returnMenu()
 {
     reset();
-    // background->update();
-    // moveObject->update();
+
     isPlay = false;
 }
 void Game::paused()
@@ -140,6 +153,7 @@ void Game::unmute()
 {
     isMute = false;
     unMuteAudio();
+    Mix_VolumeMusic(17);
     background->music->setRect(&buttons.musicSetting.rect);
 }
 void Game::handleCollision()
@@ -156,6 +170,7 @@ void Game::handleMouseClick()
     {
         if (menu->play->isInside())
         {
+            playSound("res/sounds/click.wav");
             isPlay = true;
         }
         if (menu->exit->isInside())
@@ -166,7 +181,6 @@ void Game::handleMouseClick()
         {
             if (!isGameOver)
             {
-                playSound("res/sounds/click.wav");
                 if (!isPause)
                 {
                     paused();

@@ -67,9 +67,9 @@ void Score::reset()
     currentScoreInt = 0;
     soundUpdate = 0;
 }
-uint Score::getScore()
+float Score::getScore()
 {
-    return currentScoreInt;
+    return currentScore_;
 }
 
 uint Score::getHiscore()

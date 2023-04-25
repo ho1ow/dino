@@ -10,7 +10,10 @@ void Ptero::getPteroPos()
 {
     PteroPos = ranPteroPos();
 }
-
+Vector Ptero::getPos()
+{
+    return PteroPos;
+}
 Vector Ptero::ranPteroPos()
 {
     return {Random::random(SCREEN_WIDTH, Random::random(SCREEN_WIDTH, SCREEN_WIDTH * 3 / 2)), Random::random(SCREEN_HEIGHT / 3, 579)};
@@ -41,10 +44,10 @@ void Ptero::render(SDL_Renderer *renderer, SDL_Rect *rect)
 }
 void Ptero::update()
 {
-    if (this->offScreen(PteroPos))
-    {
-        getPteroPos();
-    }
+    // if (this->offScreen(PteroPos))
+    // {
+    //     getPteroPos();
+    // }
     PteroPos.x += VEL * 1.5;
     updateHitBox();
     getPteroFrame();

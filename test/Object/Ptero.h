@@ -21,6 +21,7 @@ public:
     SDL_Rect hitBox;
     Vector PteroPos;
     Vector ranPteroPos();
+    Vector getPos();
     void getPteroPos();
 
     void getPteroFrame();

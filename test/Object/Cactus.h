@@ -26,8 +26,9 @@ public:
     SDL_Rect hitBox;
     Vector cactusPos;
     Vector ranCactusPos();
+    Vector getPos();
     void getCactusPos();
-
+    
     int ranCactusType();
     void getCactusType();
 

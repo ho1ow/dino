@@ -24,6 +24,8 @@ public:
     void setDinoDied();
     void reset();
     void upLevel();
+    void initRandom();
+    void resetLevel();
 };
 
 #endif
