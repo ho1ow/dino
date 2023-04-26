@@ -2,8 +2,8 @@
 
 Threat::Threat()
 {
-    MaxCactus=1;
-    MaxPtero=0;
+    MaxCactus = 1;
+    MaxPtero = 0;
 }
 Threat::~Threat()
 {
@@ -14,8 +14,7 @@ void Threat::initCactus()
 {
     if (allCactus.empty())
     {
-        // allCactus.emplace_back(std::make_unique<Cactus>(sheet, 1.5));
-        allCactus.push_back(std::make_unique<Cactus>(sheet, 1.5));
+        allCactus.emplace_back(std::make_unique<Cactus>(sheet, 1.5));
     }
     else
     {
@@ -91,37 +90,6 @@ void Threat::removeAll()
 }
 void Threat::removeOffScreen()
 {
-    //     auto it = allCactus.begin();
-    //     while (it != allCactus.end())
-    //     {
-    //         if ((*it)->offScreen((*it)->getPos()))
-    //         {
-    //             auto tmp = it;
-    //             it = allCactus.erase(it);
-    //             delete *tmp;
-    //         }
-    //         else
-    //         {
-    //             it++;
-    //         }
-    //     }
-    // }
-    // {
-    //     auto it = allPtero.begin();
-    //     while (it != allPtero.end())
-    //     {
-    //         if ((*it)->offScreen((*it)->getPos()))
-    //         {
-    //             auto tmp = it;
-    //             it = allPtero.erase(it);
-    //             delete *tmp;
-    //         }
-    //         else
-    //         {
-    //             it++;
-    //         }
-    //     }
-    // }
     allCactus.erase(std::remove_if(allCactus.begin(), allCactus.end(),
                                    [](const auto &threat)
                                    { return threat->offScreen(threat->getPos()); }),

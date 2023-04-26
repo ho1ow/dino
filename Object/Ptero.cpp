@@ -16,7 +16,9 @@ Vector Ptero::getPos()
 }
 Vector Ptero::ranPteroPos()
 {
-    return {Random::random(SCREEN_WIDTH, Random::random(SCREEN_WIDTH, SCREEN_WIDTH * 3 / 2)), Random::random(SCREEN_HEIGHT / 3, 579)};
+    int tmp = Random::random(SCREEN_HEIGHT / 3, 340);
+    int tmp2 = Random::random(370, 579);
+    return {Random::random(SCREEN_WIDTH, Random::random(SCREEN_WIDTH, SCREEN_WIDTH * 3 / 2)), Random::random(1, 2) == 1 ? tmp : tmp2};
 }
 
 void Ptero::getPteroFrame()

@@ -82,24 +82,15 @@ void Background::update()
 {
 
     cloud->update();
-    road->update(road->getRect());
-    road->set_speed(4);
+    road->update();
 
     pause->hover();
     music->hover();
 }
-void Background::renderCloudAndRoad(SDL_Renderer *renderer)
+void Background::renderEntity(SDL_Renderer *renderer)
 {
     cloud->render(renderer, cloud->getRect());
-    road->renderScroll(renderer, road->getRect());
-    if (road->getTexture() == NULL)
-    {
-        printf("Error: %s\n", SDL_GetError());
-    }
-    if (road->getRect() == NULL)
-    {
-        printf("Error: %s\n", SDL_GetError());
-    }
+    road->render(renderer, road->getRect());
 
     pause->render(renderer, pause->getRect());
     music->render(renderer, music->getRect());

@@ -6,10 +6,10 @@ Texture::Texture(const char *path)
     scale = 1;
 }
 
-Texture::Texture(const char *path, const double scale_)
+Texture::Texture(const char *path, const double scale)
 {
     cTexture = IMG_LoadTexture(renderer, path);
-    scale = scale_;
+    this->scale = scale;
 }
 
 Texture::~Texture()
@@ -35,14 +35,6 @@ int Texture::getRectHeight()
     return static_cast<int>(crect->h * scale);
 }
 
-void Texture::renderScroll(SDL_Renderer *renderer_, SDL_Rect *rect)
-{
-    SDL_Rect destRect = {x_, SCREEN_HEIGHT - rect->h - 20, rect->w, rect->h};
-    SDL_RenderCopy(renderer_, cTexture, rect, &destRect);
-    destRect = {x_ - rect->w, SCREEN_HEIGHT - rect->h - 20, rect->w, rect->h};
-    SDL_RenderCopy(renderer_, cTexture, rect, &destRect);
-}
-
 void Texture::renderWithPos(SDL_Renderer *renderer_, SDL_Rect *rect, Vector pos)
 {
     SDL_Rect destRect = {pos.x, pos.y, rect->w, rect->h};
@@ -55,14 +47,6 @@ void Texture::renderWithPosAndScale(SDL_Renderer *renderer_, SDL_Rect *rect, Vec
     SDL_RenderCopy(renderer_, cTexture, rect, &destRect);
 }
 
-void Texture::update(SDL_Rect *rect)
-{
-    x_ -= speed_;
-    if (x_ <= 0)
-    {
-        x_ = rect->w;
-    }
-}
 bool Texture::offScreen(Vector pos)
 {
     if (pos.x + getRectWidth() < 0 || pos.x - getRectWidth() > SCREEN_WIDTH || pos.y + getRectHeight() < 0 || pos.y - getRectHeight() > SCREEN_HEIGHT)

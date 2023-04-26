@@ -20,7 +20,6 @@ void MoveObject::render(SDL_Renderer *renderer)
 {
     dino->render(renderer, dino->getRect());
     threat->render(renderer);
-    std::cerr<<threat->getNum()<<std::endl;
 }
 void MoveObject::handleDinoEvent()
 {
@@ -63,7 +62,6 @@ void MoveObject::resetLevel()
     if (threat->getNum() > 3)
     {
         threat->setDefault();
-        std::cerr << "is set" << std::endl;
     }
 
 }

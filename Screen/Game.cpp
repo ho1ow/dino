@@ -86,16 +86,15 @@ void Game::update()
 void Game::gameUpdateLevel()
 {
     float tmpScore = score->getScore() * 10;
-    if ((uint)tmpScore % 250 == 0)
+    if ((uint)tmpScore >= 500 && (uint)tmpScore % 250 == 0)
     {
         VEL -= 1;
-        std::cerr << "VEL: " << VEL << std::endl;
     }
     if ((uint)tmpScore % 400 == 0)
     {
         moveObject->upLevel();
     }
-    if (VEL == -15)
+    if (VEL == -16)
     {
         VEL = -12;
     }
@@ -103,7 +102,7 @@ void Game::gameUpdateLevel()
 
 void Game::render()
 {
-    background->renderCloudAndRoad(renderer);
+    background->renderEntity(renderer);
     moveObject->render(renderer);
     score->render();
 }
@@ -124,7 +123,7 @@ void Game::reset()
     background->reset();
     moveObject->reset();
     score->reset();
-    VEL = -10;
+    VEL = -12;
     isGameOver = false;
 }
 void Game::returnMenu()

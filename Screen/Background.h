@@ -27,7 +27,7 @@ public:
     Button *music;
 
     void update();
-    void renderCloudAndRoad(SDL_Renderer *renderer);
+    void renderEntity(SDL_Renderer *renderer);
 
     void setIsNight();
     void setIsDay();

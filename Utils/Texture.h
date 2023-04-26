@@ -12,8 +12,6 @@ protected:
     SDL_Rect *crect;
     double scale;
     SDL_Renderer *renderer_;
-    int x_;
-    double speed_;
 
 public:
     SDL_Texture *getTexture();
@@ -24,17 +22,11 @@ public:
     int getRectHeight();
 
     Texture(const char *path);
-    Texture(const char *path, const double scale_);
+    Texture(const char *path, const double scale);
     ~Texture();
 
-    void renderScroll(SDL_Renderer *renderer_, SDL_Rect *rect);
     void renderWithPos(SDL_Renderer *renderer_, SDL_Rect *rect, Vector pos);
     void renderWithPosAndScale(SDL_Renderer *renderer_, SDL_Rect *rect, Vector pos, double scale);
-
-    void update(SDL_Rect *rect);
-
-    void set_speed(double speed) { speed_ = speed; }
-    double get_speed() { return speed_; }
 
     bool offScreen(Vector pos);
 

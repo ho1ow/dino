@@ -46,17 +46,6 @@ void playMusic(const char *path)
 
     Mix_PlayMusic(backgrounds[path], -1);
 }
-
-void pauseMusic()
-{
-    Mix_PauseMusic();
-}
-
-void resumeMusic()
-{
-    Mix_ResumeMusic();
-}
-
 void muteAudio()
 {
     Mix_VolumeMusic(0);
